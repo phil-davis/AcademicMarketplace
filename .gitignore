@@ -243,3 +243,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+
+# Ignore Typescript compiled .js files
+**/Modules/*.js
+**/Modules/*.js.map
