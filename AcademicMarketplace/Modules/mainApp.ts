@@ -1,14 +1,15 @@
-﻿module Core {
-    export class MainApp {
+﻿module Core
+{
+    export class MainApp
+    {
         "use strict";
-
         public ngApp: ng.IModule;
 
         constructor() {
-
             this.ngApp = angular.module('mainApp', ['ui.router']);
 
-            //this.ngApp.controller("homeController", AcademicMarketplace.Controllers.HomeController);
+            this.ngApp.controller('homeController', AcademicMarketplace.Controllers.HomeController);
+            this.ngApp.controller('aboutController', AcademicMarketplace.Controllers.AboutController);
 
 
             this.ngApp.config([
@@ -19,25 +20,27 @@
                         var $state = $injector.get("$state");
                         $state.go("home");
                     });
-                    //$urlRouterProvider.otherwise('/home');
-
 
                     $stateProvider.state('home',
                     {
                         url: '/home',
-                        templateUrl: 'Modules/Templates/home.html'
-                        //views: {
-                        //    'main-body@': {
-                        //        controller: 'homeController',
-                        //        templateUrl: 'Modules/Templates/home.html'
-                        //    }
-                        //}
+                        views: {
+                            '': {
+                                controller: "homeController",
+                                templateUrl: 'Modules/Templates/home.html'
+                            }
+                        }
                         });
 
-                    $stateProvider.state('test',
+                    $stateProvider.state('about',
                         {
-                            url: '/test',
-                            templateUrl: 'Modules/Templates/test.html'
+                            url: '/about',
+                            views: {
+                                '': {
+                                    controller: "aboutController",
+                                    templateUrl: 'Modules/Templates/about.html'
+                                }
+                            }
                         });
                 }
             ]);

@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademicMarketplace", "AcademicMarketplace\AcademicMarketplace.csproj", "{4B0C0243-87DF-4222-AC99-2C43D2E456EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.AcademicMarketplace", "AcademicMarketplace\Application.AcademicMarketplace.csproj", "{4B0C0243-87DF-4222-AC99-2C43D2E456EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. ApplicationLayer", "4. ApplicationLayer", "{0D2EA4E3-6799-4DF4-A5C3-A94758245486}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infrastructure", "1. Infrastructure", "{E2FDB928-BB48-43BD-85B5-65685F8B2260}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Data Access", "2. Data Access", "{DA1894A1-F285-48BF-B880-7AC7B97DF4DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Business Logic", "3. Business Logic", "{6AF0FC0C-EA37-40EF-B42E-335CE47F98CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +26,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4B0C0243-87DF-4222-AC99-2C43D2E456EC} = {0D2EA4E3-6799-4DF4-A5C3-A94758245486}
 	EndGlobalSection
 EndGlobal

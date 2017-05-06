@@ -248,3 +248,5 @@ ModelManifest.xml
 # Ignore Typescript compiled .js files
 **/Modules/*.js
 **/Modules/*.js.map
+**/Modules/**/*.js
+**/Modules/**/*.js.map
