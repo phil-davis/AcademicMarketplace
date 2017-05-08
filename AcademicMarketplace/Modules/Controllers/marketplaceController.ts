@@ -16,21 +16,9 @@
 
         private loadData(): any {
             return [
-                {
-                    postId: 1,
-                    postTitle: "Post 1",
-                    postContent: "Post 1 content"
-                },
-                {
-                    postId: 2,
-                    postTitle: "Post 2",
-                    postContent: "Post 2 content"
-                },
-                {
-                    postId: 3,
-                    postTitle: "Post 3",
-                    postContent: "Post 3 content"
-                }
+                { postId: 1, postTitle: "Data Mining Assistant", postContent: "Need assistant to perform data mining research.", postDate: "March 2017", postedBy: "James" },
+                { postId: 2, postTitle: "Usability testing assistant", postContent: "Assistant is required to help in the completion of user testing.", postDate: "April 2017", postedBy: "Steve"  },
+                { postId: 3, postTitle: "Marine Biologist needed", postContent: "A marine biologist is needed to help with cross-department research involving marine biology and technology", postDate: "April 2017", postedBy: "Mary"  }
             ];
         }
 
