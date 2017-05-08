@@ -179,6 +179,7 @@
     <Content Include="Global.asax" />
     <Content Include="Modules\Templates\home.html" />
     <Content Include="Modules\Templates\about.html" />
+    <Content Include="Modules\Templates\marketplace.html" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-ui-router.js" />
     <Content Include="Scripts\angular-ui-router.min.js" />
@@ -241,6 +242,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="Modules\Controllers\aboutController.ts" />
     <TypeScriptCompile Include="Modules\Controllers\homeController.ts" />
+    <TypeScriptCompile Include="Modules\Controllers\marketplaceController.ts" />
     <TypeScriptCompile Include="Modules\mainApp.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui\angular-ui-router.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui\angular-ui-sortable.d.ts" />

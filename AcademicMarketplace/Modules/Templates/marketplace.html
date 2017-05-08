@@ -1,0 +1,21 @@
+﻿<div ui-view>
+    <h1>Marketplace</h1>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="h2">Listings</div>
+        </div>
+        <div>
+            <div class="input-group">
+                <label>Search</label><input ng-model="listingSearchTerm"/>
+            </div>
+            <table class="table table-condensed">
+                <tr class="col-md-12" ng-repeat="item in am.mockData | filter: listingSearchTerm">
+                    <td class="col-sm-2" ng-bind="item.postTitle"></td>
+                    <td class="col-sm-8" ng-bind="item.postContent"></td>
+                    <td class="col-sm-2"><div class="btn btn-default">See More</div></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

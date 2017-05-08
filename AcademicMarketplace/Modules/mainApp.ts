@@ -1,4 +1,6 @@
-﻿module Core
+﻿/// <reference path="../T4TS.d.ts" />
+
+module Core
 {
     export class MainApp
     {
@@ -10,6 +12,7 @@
 
             this.ngApp.controller('homeController', AcademicMarketplace.Controllers.HomeController);
             this.ngApp.controller('aboutController', AcademicMarketplace.Controllers.AboutController);
+            this.ngApp.controller('marketplaceController', AcademicMarketplace.Controllers.MarketplaceController);
 
 
             this.ngApp.config([
@@ -39,6 +42,17 @@
                                 '': {
                                     controller: "aboutController",
                                     templateUrl: 'Modules/Templates/about.html'
+                                }
+                            }
+                        });
+
+                    $stateProvider.state('marketplace',
+                        {
+                            url: '/marketplace',
+                            views: {
+                                '': {
+                                    controller: "marketplaceController",
+                                    templateUrl: 'Modules/Templates/marketplace.html'
                                 }
                             }
                         });
