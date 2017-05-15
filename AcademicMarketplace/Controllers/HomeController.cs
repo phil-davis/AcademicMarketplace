@@ -11,7 +11,7 @@ namespace AcademicMarketplace.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
+            var test = new UserApiController();
             return View();
         }
     }

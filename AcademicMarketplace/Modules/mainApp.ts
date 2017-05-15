@@ -14,6 +14,8 @@ module Core
             this.ngApp.controller('aboutController', AcademicMarketplace.Controllers.AboutController);
             this.ngApp.controller('marketplaceController', AcademicMarketplace.Controllers.MarketplaceController);
 
+            this.ngApp.service('userService', AcademicMarketplace.Services.UserService);
+            this.ngApp.service('postService', AcademicMarketplace.Services.PostService);
 
             this.ngApp.config([
                 '$stateProvider', '$urlRouterProvider',

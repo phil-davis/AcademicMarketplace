@@ -1,0 +1,108 @@
+-- DB SCRIPTS --
+
+-- USER TABLE --
+	USE [AcademicMarkeplace_DEV]
+	GO
+
+	/****** Object:  Table [dbo].[User]    Script Date: 15/05/2017 2:34:26 PM ******/
+	SET ANSI_NULLS ON
+	GO
+
+	SET QUOTED_IDENTIFIER ON
+	GO
+
+	CREATE TABLE [dbo].[User](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Username] [nchar](30) NOT NULL,
+		[FirstName] [nchar](30) NOT NULL,
+		[LastName] [nchar](30) NULL,
+		[Admin] [bit] NOT NULL CONSTRAINT [DF_User_Admin]  DEFAULT ((0)),
+	 CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	GO
+
+-- POST TABLE --
+	/****** Object:  Table [dbo].[Post]    Script Date: 15/05/2017 2:34:29 PM ******/
+	SET ANSI_NULLS ON
+	GO
+
+	SET QUOTED_IDENTIFIER ON
+	GO
+
+	CREATE TABLE [dbo].[Post](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Title] [nvarchar](50) NOT NULL,
+		[Description] [nvarchar](500) NULL,
+		[PostedBy] [int] NOT NULL,
+		[PostedDate] [datetime] NOT NULL,
+		[CompletedBy] [int] NULL,
+		[CompletedDate] [datetime] NULL,
+		[Active] [bit] NOT NULL CONSTRAINT [DF_Post_Active]  DEFAULT ((1)),
+	 CONSTRAINT [PK_Post] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	GO
+
+	ALTER TABLE [dbo].[Post]  WITH CHECK ADD  CONSTRAINT [FK_Post-CompletedBy_User-Id] FOREIGN KEY([CompletedBy])
+	REFERENCES [dbo].[User] ([Id])
+	GO
+
+	ALTER TABLE [dbo].[Post] CHECK CONSTRAINT [FK_Post-CompletedBy_User-Id]
+	GO
+
+	ALTER TABLE [dbo].[Post]  WITH CHECK ADD  CONSTRAINT [FK_Post-PostedBy_User-Id] FOREIGN KEY([PostedBy])
+	REFERENCES [dbo].[User] ([Id])
+	GO
+
+	ALTER TABLE [dbo].[Post] CHECK CONSTRAINT [FK_Post-PostedBy_User-Id]
+	GO
+
+-- BALANCE TABLE -- 
+	/****** Object:  Table [dbo].[Balance]    Script Date: 15/05/2017 2:34:33 PM ******/
+	SET ANSI_NULLS ON
+	GO
+
+	SET QUOTED_IDENTIFIER ON
+	GO
+
+	CREATE TABLE [dbo].[Balance](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[UserId] [int] NOT NULL,
+		[Balance] [int] NULL,
+	 CONSTRAINT [PK_Balance] PRIMARY KEY CLUSTERED 
+	(
+		[UserId] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	GO
+
+	ALTER TABLE [dbo].[Balance]  WITH CHECK ADD  CONSTRAINT [FK_Balance_Balance] FOREIGN KEY([UserId])
+	REFERENCES [dbo].[User] ([Id])
+	GO
+
+	ALTER TABLE [dbo].[Balance] CHECK CONSTRAINT [FK_Balance_Balance]
+	GO
+
+-- POPULATE -- 
+	USE [AcademicMarkeplace_DEV]
+	GO
+
+	INSERT INTO [dbo].[User] (Username, FirstName, LastName, Admin)
+	VALUES ('taulelei', 'Isaac', 'Taulelei', 1)
+	GO
+
+	INSERT INTO [dbo].[Post] (Title, Description, PostedBy, PostedDate, Active)
+	VALUES ('Test Post', 'Test Post Content', 1, GETDATE(), 1)
+	GO
+
+	INSERT INTO [dbo].[Balance] (UserId, CreditBalance)
+	VALUES (1, 100)
+	GO

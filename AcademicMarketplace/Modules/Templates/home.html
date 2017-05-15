@@ -1,17 +1,42 @@
 ﻿<div ui-view>
-    <h1>User Homepage</h1>
-
+    <h1><b>{{am.user.username}}</b> Homepage</h1>
     <div class="row">
         <div class="panel col-md-12">
             <div class="panel-body">
                 <div class="col-sm-4">
-                    <label>Credit Balance:</label>
+                    <label>Credit Balance: {{am.user.balance.creditBalance}}</label>
                 </div>
                 <div class="col-sm-4">
-                    <label>Active listings:</label>
+                    <label>Active listings: {{am.user.postsMade.length}}</label>
                 </div>
                 <div class="col-sm-4">
-                    <label>Completed:</label>
+                    <label>Completed: {{am.user.postsCompleted.length}}</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel col-md-12">
+            <div class="panel-body">
+                <div class="h3">My listings:</div>
+                <div class="">
+                    <table class="table table-condensed">
+                        <tr>
+                            <th>Post Title</th>
+                            <th>Description</th>
+                            <th>Posted Date</th>
+                            <th>Active</th>
+                            <th></th>
+                        </tr>
+                        <tr class="col-md-12" ng-repeat="item in am.user.postsMade">
+                            <td class="col-sm-2" ng-bind="item.title"></td>
+                            <td class="col-sm-4" ng-bind="item.description"></td>
+                            <td class="col-sm-2" ng-bind="item.postedDate"></td>
+                            <td class="col-sm-2" ng-bind="item.active"></td>
+                            <td class="col-sm-2">
+                                <div class="btn btn-default">See More</div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

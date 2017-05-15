@@ -32,7 +32,9 @@ namespace AcademicMarketplace
             bundles.Add(new ScriptBundle("~/bundles/controllers").Include(
                 "~/Modules/Controllers/homeController.js",
                 "~/Modules/Controllers/aboutController.js",
-                "~/Modules/Controllers/marketplaceController.js"));
+                "~/Modules/Controllers/marketplaceController.js",
+                "~/Modules/Services/userService.js",
+                "~/Modules/Services/postService.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
