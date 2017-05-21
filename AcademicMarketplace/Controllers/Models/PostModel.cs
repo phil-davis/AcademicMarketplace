@@ -12,9 +12,9 @@ namespace AcademicMarketplace.Controllers.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime PostedDate { get; set; }
-        public int PostedBy { get; set; }
+        public string PostedBy { get; set; }
         public DateTime? CompletedDate { get; set; }
-        public int? CompletedBy { get; set; }
+        public string CompletedBy { get; set; }
         public bool Active { get; set; }
         public virtual UserModel CompletedByUser { get; set; }
         public virtual UserModel PostedByUser { get; set; }

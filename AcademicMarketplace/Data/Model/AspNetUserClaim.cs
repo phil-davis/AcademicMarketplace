@@ -12,18 +12,13 @@ namespace AcademicMarketplace.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Post
+    public partial class AspNetUserClaim
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string PostedBy { get; set; }
-        public System.DateTime PostedDate { get; set; }
-        public string CompletedBy { get; set; }
-        public Nullable<System.DateTime> CompletedDate { get; set; }
-        public bool Active { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
     
-        public virtual AspNetUser CompletedByUser { get; set; }
-        public virtual AspNetUser PostedByUser { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

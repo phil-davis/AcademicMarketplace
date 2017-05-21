@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using AcademicMarketplace.Controllers.Models;
 using AcademicMarketplace.Business;
+using Microsoft.AspNet.Identity;
 
 namespace AcademicMarketplace.Controllers
 {
@@ -19,9 +20,25 @@ namespace AcademicMarketplace.Controllers
 
         [HttpGet]
         [Route("GetUser/{id?}")]
-        public UserModel Get(int id)
+        public UserModel Get(string id)
         {
             return _service.GetUser(id);
+        }
+
+        [HttpGet]
+        [Route("GetCurrentUser/")]
+        public UserModel GetCurrentUser()
+        {
+            try
+            {
+                return _service.GetUser(User.Identity.GetUserId());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
 

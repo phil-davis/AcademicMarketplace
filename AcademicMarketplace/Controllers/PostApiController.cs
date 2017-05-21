@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using AcademicMarketplace.Controllers.Models;
 using AcademicMarketplace.Business;
+using Microsoft.AspNet.Identity;
 
 namespace AcademicMarketplace.Controllers
 {
@@ -29,7 +30,7 @@ namespace AcademicMarketplace.Controllers
         [Route("AddPost/")]
         public IHttpActionResult AddPost(PostModel post)
         {
-            post.PostedBy = 1;
+            post.PostedBy = User.Identity.GetUserId();
             try
             {
                 _service.AddPost(post);

@@ -11,7 +11,7 @@ var AcademicMarketplace;
             }
             HomeController.prototype.getCurrentUser = function () {
                 var _this = this;
-                this.userService.getUser(1).then(function (response) {
+                this.userService.getCurrentUser().then(function (response) {
                     _this.user = response.data;
                 });
             };

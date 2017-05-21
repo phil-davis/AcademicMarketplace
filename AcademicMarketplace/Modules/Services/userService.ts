@@ -14,5 +14,12 @@
                 url: '../GetUser/' + userId
             });
         }
+
+        getCurrentUser(): any {
+            return this.httpService({
+                method: 'GET',
+                url: '../GetCurrentUser/'
+            });
+        }
     }
 }

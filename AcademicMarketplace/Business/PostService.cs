@@ -37,18 +37,12 @@ namespace AcademicMarketplace.Business
                 if (post.PostedByUser != null)
                 {
                     postedBy.Id = post.PostedBy;
-                    postedBy.Username = post.PostedByUser.Username;
-                    postedBy.FirstName = post.PostedByUser.FirstName;
-                    postedBy.LastName = post.PostedByUser.LastName;
-                    postedBy.Admin = post.PostedByUser.Admin;
+                    postedBy.Username = post.PostedByUser.UserName;
                 }
                 if (post.CompletedByUser != null)
                 {
-                    completedBy.Id = post.PostedBy;
-                    completedBy.Username = post.PostedByUser.Username;
-                    completedBy.FirstName = post.PostedByUser.FirstName;
-                    completedBy.LastName = post.PostedByUser.LastName;
-                    completedBy.Admin = post.PostedByUser.Admin;
+                    completedBy.Id = post.CompletedBy;
+                    completedBy.Username = post.CompletedByUser.UserName;
                 }
 
                 newList.Add(new PostModel()
@@ -77,18 +71,12 @@ namespace AcademicMarketplace.Business
             if (data.PostedByUser != null)
             {
                 postedBy.Id = data.PostedBy;
-                postedBy.Username = data.PostedByUser.Username;
-                postedBy.FirstName = data.PostedByUser.FirstName;
-                postedBy.LastName = data.PostedByUser.LastName;
-                postedBy.Admin = data.PostedByUser.Admin;
+                postedBy.Username = data.PostedByUser.UserName;
             }
             if (data.CompletedByUser != null)
             {
                 completedBy.Id = data.CompletedBy;
-                completedBy.Username = data.CompletedByUser.Username;
-                completedBy.FirstName = data.CompletedByUser.FirstName;
-                completedBy.LastName = data.CompletedByUser.LastName;
-                completedBy.Admin = data.CompletedByUser.Admin;
+                completedBy.Username = data.CompletedByUser.UserName;
             }
             return new PostModel()
             {

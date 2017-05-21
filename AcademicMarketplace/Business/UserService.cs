@@ -9,7 +9,7 @@ namespace AcademicMarketplace.Business
 {
     public interface IUserService
     {
-        UserModel GetUser(int id);
+        UserModel GetUser(string id);
     }
 
     public class UserService : IUserService
@@ -21,50 +21,51 @@ namespace AcademicMarketplace.Business
             _data = new DataAccessService();
         }
 
-        public UserModel GetUser(int id)
+        public UserModel GetUser(string id)
         {
-            var data = _data.GetUser(1);
+            var data = _data.GetUser(id);
             var postsMade = new List<PostModel>();
             var postsCompleted = new List<PostModel>();
-            foreach (var post in data.PostsMade)
+            if (data.PostsMade != null)
             {
-                postsMade.Add(new PostModel()
+                foreach (var post in data.PostsMade)
                 {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Description = post.Description,
-                    PostedDate = post.PostedDate,
-                    PostedBy = post.PostedBy,
-                    CompletedDate = post.CompletedDate,
-                    CompletedBy = post.CompletedBy,
-                    Active = post.Active
-                });
+                    postsMade.Add(new PostModel()
+                    {
+                        Id = post.Id,
+                        Title = post.Title,
+                        Description = post.Description,
+                        PostedDate = post.PostedDate,
+                        PostedBy = post.PostedBy,
+                        CompletedDate = post.CompletedDate,
+                        CompletedBy = post.CompletedBy,
+                        Active = post.Active
+                    });
+                }
             }
-            foreach (var post in data.PostsCompleted)
+            if (data.PostsCompleted != null)
             {
-                postsCompleted.Add(new PostModel()
+                foreach (var post in data.PostsCompleted)
                 {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Description = post.Description,
-                    PostedDate = post.PostedDate,
-                    PostedBy = post.PostedBy,
-                    CompletedDate = post.CompletedDate,
-                    CompletedBy = post.CompletedBy,
-                    Active = post.Active
-                });
+                    postsCompleted.Add(new PostModel()
+                    {
+                        Id = post.Id,
+                        Title = post.Title,
+                        Description = post.Description,
+                        PostedDate = post.PostedDate,
+                        PostedBy = post.PostedBy,
+                        CompletedDate = post.CompletedDate,
+                        CompletedBy = post.CompletedBy,
+                        Active = post.Active
+                    });
+                }
             }
+            
             return new UserModel()
             {
                 Id = data.Id,
-                Username = data.Username,
-                FirstName = data.FirstName,
-                LastName = data.LastName,
-                Balance = new BalanceModel()
-                {
-                    UserId = data.Balance.UserId,
-                    CreditBalance = data.Balance.Balance1
-                },
+                Username = data.UserName,
+                Balance = new BalanceModel(),
                 PostsMade = postsMade,
                 PostsCompleted = postsCompleted,
             };

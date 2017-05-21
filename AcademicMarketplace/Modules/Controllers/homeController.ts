@@ -13,7 +13,7 @@
         }
 
         private getCurrentUser() {
-            this.userService.getUser(1).then((response) => {
+            this.userService.getCurrentUser().then((response) => {
                 this.user = response.data;
             });
         }

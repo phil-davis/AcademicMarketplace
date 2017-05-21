@@ -6,13 +6,11 @@ using System.Web.Mvc;
 
 namespace AcademicMarketplace.Controllers
 {
-    public class HomeController : Controller
+    public class ManageController : Controller
     {
-        [Authorize]
+        // GET: Manage
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-            var test = new UserApiController();
             return View();
         }
     }

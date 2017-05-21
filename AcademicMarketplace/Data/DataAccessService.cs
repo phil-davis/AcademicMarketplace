@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using AcademicMarketplace.Controllers.Models;
@@ -9,7 +10,7 @@ namespace AcademicMarketplace.Data
 {
     interface IDataAccessService
     {
-        User GetUser(int id);
+        AspNetUser GetUser(string id);
         List<Post> GetAll();
         Post AddPost(PostModel post);
         string DeletePost(int id);
@@ -17,18 +18,18 @@ namespace AcademicMarketplace.Data
 
     public class DataAccessService : IDataAccessService
     {
-        private DBEntities _context;
+        private DefaultConnectionEntities _context;
 
         public DataAccessService()
         {
-            _context = new DBEntities();
+            _context = new AcademicMarketplace.Data.Model.DefaultConnectionEntities();
         }
 
         #region User
 
-        public User GetUser(int id)
+        public AspNetUser GetUser(string id)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == id);
+            return _context.AspNetUsers.FirstOrDefault(x => x.Id.Equals(id));
         }
 
         #endregion
