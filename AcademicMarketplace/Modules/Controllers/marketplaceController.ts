@@ -21,10 +21,12 @@
         }
 
         public addPost(post: Models.PostModel.IPostModel) {
-            this.postService.addPost(post).then(() => {
-                this.newPost = {};
-                this.loadData();
-            });
+            if (post.title.trim() !== "" && post.description.trim() !== "") {
+                this.postService.addPost(post).then(() => {
+                    this.newPost = {};
+                    this.loadData();
+                });
+            }
         }
 
         public deletePost(id: number) {
