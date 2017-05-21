@@ -14,7 +14,6 @@ namespace AcademicMarketplace.Data.Model
     
     public partial class Balance
     {
-        public int Id { get; set; }
         public string UserId { get; set; }
         public Nullable<int> Balance1 { get; set; }
     

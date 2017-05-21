@@ -9,7 +9,9 @@ namespace AcademicMarketplace.Controllers.Models
 
     public class BalanceModel
     {
-        public string UserId { get; set; }
-        public int? CreditBalance { get; set; }
+        public string User { get; set; }
+        public int? Balance { get; set; }
+
+        public virtual UserModel User1 { get; set; }
     }
 }

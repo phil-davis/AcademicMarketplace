@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -178,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -210,15 +215,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Business\PostService.cs" />
+    <Compile Include="Business\MarketplaceListingService.cs" />
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Models\BalanceModel.cs" />
-    <Compile Include="Controllers\Models\PostModel.cs" />
+    <Compile Include="Controllers\Models\MarketplaceListingModel.cs" />
+    <Compile Include="Controllers\Models\ServiceRequestModel.cs" />
     <Compile Include="Controllers\Models\UserModel.cs" />
-    <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\Models\WorkgroupModel.cs" />
+    <Compile Include="Controllers\MarketplaceListingApiController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Data\DataAccessService.cs" />
     <Compile Include="Data\Model\AspNetRole.cs">
@@ -254,7 +261,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Data\Model\Post.cs">
+    <Compile Include="Data\Model\MarketplaceListing.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Model\ServiceRequest.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Model\Workgroup.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">

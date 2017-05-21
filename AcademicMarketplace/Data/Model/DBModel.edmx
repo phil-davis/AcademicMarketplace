@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DefaultConnectionEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DefaultConnectionEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -65,29 +65,53 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="128" />
+          <Property Name="Location" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Balance">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Balance" Type="int" />
         </EntityType>
-        <EntityType Name="Post">
+        <EntityType Name="MarketplaceListing">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Workgroup" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
-          <Property Name="PostedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="PostedDate" Type="datetime" Nullable="false" />
-          <Property Name="CompletedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="CompletedDate" Type="datetime" />
-          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="256" />
         </EntityType>
-        <Association Name="FK_Balance_Balance">
+        <EntityType Name="ServiceRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarketListing" Type="int" Nullable="false" />
+          <Property Name="RequestedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="Status" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Workgroup">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="WorkgroupUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="WorkgroupCode" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="WorkgroupCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Balance-UserId_AspNetUsers-Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Balance" Type="Self.Balance" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -155,27 +179,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Post-CompletedBy_User-Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+        <Association Name="FK_MarketplaceListing-Workgroup_Workgroup-Code">
+          <End Role="Workgroup" Type="Self.Workgroup" Multiplicity="1" />
+          <End Role="MarketplaceListing" Type="Self.MarketplaceListing" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="Workgroup">
+              <PropertyRef Name="Code" />
             </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="CompletedBy" />
+            <Dependent Role="MarketplaceListing">
+              <PropertyRef Name="Workgroup" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Post-PostedBy_User-Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+        <Association Name="FK_ServiceRequest-Listing_MarketplaceListing-Id">
+          <End Role="MarketplaceListing" Type="Self.MarketplaceListing" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarketplaceListing">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="MarketListing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest-RequestedBy_AspNetUsers-Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PostedBy" />
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="RequestedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkgroupUser-UserId_AspNetUsers-Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="WorkgroupUser" Type="Self.WorkgroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkgroupUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkgroupUser-WorkgroupCode_Workgroup-Code">
+          <End Role="Workgroup" Type="Self.Workgroup" Multiplicity="1" />
+          <End Role="WorkgroupUser" Type="Self.WorkgroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workgroup">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="WorkgroupUser">
+              <PropertyRef Name="WorkgroupCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -187,8 +247,11 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Balance" EntityType="Self.Balance" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Balance_Balance" Association="Self.FK_Balance_Balance">
+          <EntitySet Name="MarketplaceListing" EntityType="Self.MarketplaceListing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest" EntityType="Self.ServiceRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workgroup" EntityType="Self.Workgroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkgroupUser" EntityType="Self.WorkgroupUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Balance-UserId_AspNetUsers-Id" Association="Self.FK_Balance-UserId_AspNetUsers-Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Balance" EntitySet="Balance" />
           </AssociationSet>
@@ -208,17 +271,28 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Post-CompletedBy_User-Id" Association="Self.FK_Post-CompletedBy_User-Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Post" EntitySet="Post" />
+          <AssociationSet Name="FK_MarketplaceListing-Workgroup_Workgroup-Code" Association="Self.FK_MarketplaceListing-Workgroup_Workgroup-Code">
+            <End Role="Workgroup" EntitySet="Workgroup" />
+            <End Role="MarketplaceListing" EntitySet="MarketplaceListing" />
           </AssociationSet>
-          <AssociationSet Name="FK_Post-PostedBy_User-Id" Association="Self.FK_Post-PostedBy_User-Id">
+          <AssociationSet Name="FK_ServiceRequest-Listing_MarketplaceListing-Id" Association="Self.FK_ServiceRequest-Listing_MarketplaceListing-Id">
+            <End Role="MarketplaceListing" EntitySet="MarketplaceListing" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest-RequestedBy_AspNetUsers-Id" Association="Self.FK_ServiceRequest-RequestedBy_AspNetUsers-Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Post" EntitySet="Post" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkgroupUser-UserId_AspNetUsers-Id" Association="Self.FK_WorkgroupUser-UserId_AspNetUsers-Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="WorkgroupUser" EntitySet="WorkgroupUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkgroupUser-WorkgroupCode_Workgroup-Code" Association="Self.FK_WorkgroupUser-WorkgroupCode_Workgroup-Code">
+            <End Role="Workgroup" EntitySet="Workgroup" />
+            <End Role="WorkgroupUser" EntitySet="WorkgroupUser" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DefaultConnectionEntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -239,16 +313,6 @@
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaim">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -277,51 +341,16 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Balance" Relationship="Self.FK_Balance_Balance" FromRole="AspNetUsers" ToRole="Balance" />
-          <NavigationProperty Name="PostsCompleted" Relationship="Self.FK_Post_CompletedBy_User_Id" FromRole="AspNetUsers" ToRole="Post" />
-          <NavigationProperty Name="PostsMade" Relationship="Self.FK_Post_PostedBy_User_Id" FromRole="AspNetUsers" ToRole="Post" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ServiceRequests" Relationship="DefaultConnectionEntitiesModel.FK_ServiceRequest_RequestedBy_AspNetUsers_Id" FromRole="AspNetUser" ToRole="ServiceRequest" />
+          <NavigationProperty Name="Workgroups" Relationship="DefaultConnectionEntitiesModel.WorkgroupUser" FromRole="AspNetUser" ToRole="Workgroup" />
+          <NavigationProperty Name="Balance" Relationship="DefaultConnectionEntitiesModel.FK_Balance_UserId_AspNetUsers_Id" FromRole="AspNetUser" ToRole="Balance" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="DefaultConnectionEntitiesModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
         </EntityType>
-        <EntityType Name="Balance">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Balance1" Type="Int32" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Balance_Balance" FromRole="Balance" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="Post">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="PostedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PostedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CompletedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CompletedByUser" Relationship="Self.FK_Post_CompletedBy_User_Id" FromRole="Post" ToRole="AspNetUsers" />
-          <NavigationProperty Name="PostedByUser" Relationship="Self.FK_Post_PostedBy_User_Id" FromRole="Post" ToRole="AspNetUsers" />
-        </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -336,42 +365,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Balance_Balance">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="Balance" Type="Self.Balance" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Balance">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_CompletedBy_User_Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="CompletedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_PostedBy_User_Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PostedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -379,36 +372,163 @@
         <EntityContainer Name="DefaultConnectionEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Balances" EntityType="Self.Balance" />
-          <EntitySet Name="Posts" EntityType="Self.Post" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Balance_Balance" Association="Self.FK_Balance_Balance">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Balance" EntitySet="Balances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_CompletedBy_User_Id" Association="Self.FK_Post_CompletedBy_User_Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_PostedBy_User_Id" Association="Self.FK_Post_PostedBy_User_Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="MarketplaceListings" EntityType="DefaultConnectionEntitiesModel.MarketplaceListing" />
+          <EntitySet Name="ServiceRequests" EntityType="DefaultConnectionEntitiesModel.ServiceRequest" />
+          <EntitySet Name="Workgroups" EntityType="DefaultConnectionEntitiesModel.Workgroup" />
+          <AssociationSet Name="FK_ServiceRequest_RequestedBy_AspNetUsers_Id" Association="DefaultConnectionEntitiesModel.FK_ServiceRequest_RequestedBy_AspNetUsers_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MarketplaceListing_Workgroup_Workgroup_Code" Association="DefaultConnectionEntitiesModel.FK_MarketplaceListing_Workgroup_Workgroup_Code">
+            <End Role="Workgroup" EntitySet="Workgroups" />
+            <End Role="MarketplaceListing" EntitySet="MarketplaceListings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Listing_MarketplaceListing_Id" Association="DefaultConnectionEntitiesModel.FK_ServiceRequest_Listing_MarketplaceListing_Id">
+            <End Role="MarketplaceListing" EntitySet="MarketplaceListings" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="WorkgroupUser" Association="DefaultConnectionEntitiesModel.WorkgroupUser">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Workgroup" EntitySet="Workgroups" />
+          </AssociationSet>
+          <EntitySet Name="Balances" EntityType="DefaultConnectionEntitiesModel.Balance" />
+          <AssociationSet Name="FK_Balance_UserId_AspNetUsers_Id" Association="DefaultConnectionEntitiesModel.FK_Balance_UserId_AspNetUsers_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Balance" EntitySet="Balances" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUserClaims" EntityType="DefaultConnectionEntitiesModel.AspNetUserClaim" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="DefaultConnectionEntitiesModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="MarketplaceListing">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Workgroup" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Workgroup1" Relationship="DefaultConnectionEntitiesModel.FK_MarketplaceListing_Workgroup_Workgroup_Code" FromRole="MarketplaceListing" ToRole="Workgroup" />
+          <NavigationProperty Name="ServiceRequests" Relationship="DefaultConnectionEntitiesModel.FK_ServiceRequest_Listing_MarketplaceListing_Id" FromRole="MarketplaceListing" ToRole="ServiceRequest" />
+        </EntityType>
+        <EntityType Name="ServiceRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarketListing" Type="Int32" Nullable="false" />
+          <Property Name="RequestedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="DefaultConnectionEntitiesModel.FK_ServiceRequest_RequestedBy_AspNetUsers_Id" FromRole="ServiceRequest" ToRole="AspNetUser" />
+          <NavigationProperty Name="MarketplaceListing" Relationship="DefaultConnectionEntitiesModel.FK_ServiceRequest_Listing_MarketplaceListing_Id" FromRole="ServiceRequest" ToRole="MarketplaceListing" />
+        </EntityType>
+        <EntityType Name="Workgroup">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MarketplaceListings" Relationship="DefaultConnectionEntitiesModel.FK_MarketplaceListing_Workgroup_Workgroup_Code" FromRole="Workgroup" ToRole="MarketplaceListing" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DefaultConnectionEntitiesModel.WorkgroupUser" FromRole="Workgroup" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_ServiceRequest_RequestedBy_AspNetUsers_Id">
+          <End Type="DefaultConnectionEntitiesModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="DefaultConnectionEntitiesModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="RequestedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MarketplaceListing_Workgroup_Workgroup_Code">
+          <End Type="DefaultConnectionEntitiesModel.Workgroup" Role="Workgroup" Multiplicity="1" />
+          <End Type="DefaultConnectionEntitiesModel.MarketplaceListing" Role="MarketplaceListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workgroup">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="MarketplaceListing">
+              <PropertyRef Name="Workgroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Listing_MarketplaceListing_Id">
+          <End Type="DefaultConnectionEntitiesModel.MarketplaceListing" Role="MarketplaceListing" Multiplicity="1" />
+          <End Type="DefaultConnectionEntitiesModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarketplaceListing">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="MarketListing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkgroupUser">
+          <End Type="DefaultConnectionEntitiesModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="DefaultConnectionEntitiesModel.Workgroup" Role="Workgroup" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Balance">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Balance1" Type="Int32" />
+          <NavigationProperty Name="AspNetUser" Relationship="DefaultConnectionEntitiesModel.FK_Balance_UserId_AspNetUsers_Id" FromRole="Balance" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_Balance_UserId_AspNetUsers_Id">
+          <End Type="DefaultConnectionEntitiesModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="DefaultConnectionEntitiesModel.Balance" Role="Balance" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Balance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="DefaultConnectionEntitiesModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="DefaultConnectionEntitiesModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DefaultConnectionEntitiesModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -433,16 +553,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.AspNetUserClaim">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
@@ -455,6 +565,9 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -470,29 +583,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Balances">
-            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.Balance">
-              <MappingFragment StoreEntitySet="Balance">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Balance1" ColumnName="Balance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Posts">
-            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.Post">
-              <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
-                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
-                <ScalarProperty Name="CompletedBy" ColumnName="CompletedBy" />
-                <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="DefaultConnectionEntitiesModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -501,7 +591,63 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="MarketplaceListings">
+            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.MarketplaceListing">
+              <MappingFragment StoreEntitySet="MarketplaceListing">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Workgroup" ColumnName="Workgroup" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequests">
+            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.ServiceRequest">
+              <MappingFragment StoreEntitySet="ServiceRequest">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="MarketListing" ColumnName="MarketListing" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workgroups">
+            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.Workgroup">
+              <MappingFragment StoreEntitySet="Workgroup">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="WorkgroupUser" TypeName="DefaultConnectionEntitiesModel.WorkgroupUser" StoreEntitySet="WorkgroupUser">
+            <EndProperty Name="Workgroup">
+              <ScalarProperty Name="Code" ColumnName="WorkgroupCode" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Balances">
+            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.Balance">
+              <MappingFragment StoreEntitySet="Balance">
+                <ScalarProperty Name="Balance1" ColumnName="Balance" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="DefaultConnectionEntitiesModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

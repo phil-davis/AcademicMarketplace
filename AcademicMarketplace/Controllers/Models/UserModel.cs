@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AcademicMarketplace.Data.Model;
 
 namespace AcademicMarketplace.Controllers.Models
 {
@@ -12,8 +13,11 @@ namespace AcademicMarketplace.Controllers.Models
         public string Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
+        public string Location { get; set; }
         public virtual BalanceModel Balance { get; set; }
-        public virtual List<PostModel> PostsMade { get; set; }
-        public virtual List<PostModel> PostsCompleted { get; set; }
+        public virtual List<ServiceRequestModel> ServiceRequests { get; set; }
+        public virtual List<WorkgroupModel> Workgroups { get; set; }
     }
 }

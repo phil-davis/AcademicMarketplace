@@ -10,30 +10,29 @@ using Microsoft.AspNet.Identity;
 
 namespace AcademicMarketplace.Controllers
 {
-    public class PostApiController : ApiController
+    public class MarketplaceListingApiController : ApiController
     {
-        private readonly IPostService _service;
+        private readonly IMarketplaceListingService _service;
 
-        public PostApiController()
+        public MarketplaceListingApiController()
         {
-            _service = new PostService();
+            _service = new MarketplaceListingService();
         }
 
         [HttpGet]
         [Route("GetAll/")]
-        public List<PostModel> GetAll()
+        public List<MarketplaceListingModel> GetAll()
         {
             return _service.GetAll();
         }
 
         [HttpPost]
         [Route("AddPost/")]
-        public IHttpActionResult AddPost(PostModel post)
+        public IHttpActionResult AddPost(MarketplaceListingModel post)
         {
-            post.PostedBy = User.Identity.GetUserId();
             try
             {
-                _service.AddPost(post);
+                _service.AddListing(post);
                 return Ok();
             }
             catch (Exception e)
@@ -49,7 +48,7 @@ namespace AcademicMarketplace.Controllers
         {
             try
             {
-                _service.DeletePost(id);
+                _service.DeleteListing(id);
                 return Ok();
             }
             catch (Exception e)

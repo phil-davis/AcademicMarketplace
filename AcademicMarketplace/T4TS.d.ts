@@ -5,37 +5,36 @@
 declare module Models.BalanceModel {
     /** Generated from AcademicMarketplace.Controllers.Models.BalanceModel **/
     export interface IBalanceModel {
-        userId: number;
-        creditBalance?: number;
+        user: string;
+        balance?: number;
+        user1: Models.UserModel.IUserModel;
     }
 }
 
 declare module Models.PostModel {
-    /** Generated from AcademicMarketplace.Controllers.Models.PostModel **/
-    export interface IPostModel {
-        id?: number;
-        title: string;
+    /** Generated from AcademicMarketplace.Controllers.Models.MarketplaceListingModel **/
+    export interface IMarketplaceListingModel {
+        id: number;
+        workgroup: string;
+        name: string;
         description: string;
-        postedDate: string;
-        postedBy: number;
-        completedDate?: string;
-        completedBy?: number;
-        active: boolean;
-        completedByUser: Models.UserModel.IUserModel;
-        postedByUser: Models.UserModel.IUserModel;
+        image: string;
+        workgroup1: any;
+        serviceRequests: any[];
     }
 }
 
 declare module Models.UserModel {
     /** Generated from AcademicMarketplace.Controllers.Models.UserModel **/
     export interface IUserModel {
-        id?: number;
+        id: string;
         username: string;
+        email: string;
         firstName: string;
-        lastName: string;
-        admin: boolean;
+        surname: string;
+        location: string;
         balance: Models.BalanceModel.IBalanceModel;
-        postsMade: Models.PostModel.IPostModel[];
-        postsCompleted: Models.PostModel.IPostModel[];
+        serviceRequests: any[];
+        workgroups: any[];
     }
 }

@@ -76,26 +76,26 @@ namespace AcademicMarketplace.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
-            var user = await UserManager.FindByNameAsync(model.Username);
-            if (user != null)
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
             {
-                await SignInManager.SignInAsync(user, true, true);
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
             }
-            return View();
+            //var user = await UserManager.FindByNameAsync(model.Username);
+            //if (user != null)
+            //{
+            //    await SignInManager.SignInAsync(user, true, true);
+            //}
+            //return View();
         }
 
         //
