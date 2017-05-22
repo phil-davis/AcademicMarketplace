@@ -11,6 +11,9 @@ namespace AcademicMarketplace
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                        "~/Scripts/jquery.validate.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -30,12 +33,10 @@ namespace AcademicMarketplace
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/controllers").Include(
-                // Controllers
                 "~/Modules/Controllers/homeController.js",
                 "~/Modules/Controllers/aboutController.js",
                 "~/Modules/Controllers/marketplaceController.js",
                 "~/Modules/Controllers/workgroupController.js",
-                // Services
                 "~/Modules/Services/userService.js",
                 "~/Modules/Services/marketplaceListingService.js",
                 "~/Modules/Services/workgroupService.js"));
