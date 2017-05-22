@@ -2,7 +2,7 @@
 {
     export class AboutController
     {
-        static $inject = ['$scope'];
+        static $inject = ["$scope"];
 
         constructor(
             private $scope

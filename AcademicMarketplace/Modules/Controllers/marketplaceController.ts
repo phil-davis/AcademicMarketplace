@@ -1,6 +1,6 @@
 ﻿module AcademicMarketplace.Controllers {
     export class MarketplaceController{
-        static $inject = ['$scope', 'marketplaceListingService'];
+        static $inject = ["$scope", "marketplaceListingService"];
 
         newListing: {};
         allListings: Models.MarketplaceListingModel.IMarketplaceListingModel[];

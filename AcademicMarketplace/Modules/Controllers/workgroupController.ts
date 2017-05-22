@@ -1,6 +1,6 @@
 ﻿module AcademicMarketplace.Controllers {
     export class WorkgroupController {
-        static $inject = ['$scope', 'userService', 'workgroupService'];
+        static $inject = ["$scope", "userService", "workgroupService"];
         private user: Models.UserModel.IUserModel;
 
         newWorkgroup: {};

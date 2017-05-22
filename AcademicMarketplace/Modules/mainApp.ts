@@ -5,23 +5,24 @@ module Core
     export class MainApp
     {
         "use strict";
-        //public ngApp: ng.IModule;
-        public ngApp = angular.module('mainApp', ['ui.router']);
+        public ngApp: ng.IModule;
 
         constructor() {
-            //this.ngApp = angular.module('mainApp', ['ui.router']);
+            this.ngApp = angular.module("mainApp", ["ui.router"]);
 
-            this.ngApp.service('userService', AcademicMarketplace.Services.UserService);
-            this.ngApp.service('marketplaceListingService', AcademicMarketplace.Services.MarketplaceListingService);
-            this.ngApp.service('workgroupService', AcademicMarketplace.Services.WorkgroupService);
+            this.ngApp.service("userService", AcademicMarketplace.Services.UserService);
+            this.ngApp.service("marketplaceListingService", AcademicMarketplace.Services.MarketplaceListingService);
+            this.ngApp.service("workgroupService", AcademicMarketplace.Services.WorkgroupService);
 
-            this.ngApp.controller('homeController', AcademicMarketplace.Controllers.HomeController);
-            this.ngApp.controller('aboutController', AcademicMarketplace.Controllers.AboutController);
-            this.ngApp.controller('marketplaceController', AcademicMarketplace.Controllers.MarketplaceController);
-            this.ngApp.controller('workgroupController', AcademicMarketplace.Controllers.WorkgroupController);
+            this.ngApp.controller("homeController", AcademicMarketplace.Controllers.HomeController);
+            this.ngApp.controller("aboutController", AcademicMarketplace.Controllers.AboutController);
+            this.ngApp.controller("marketplaceController", AcademicMarketplace.Controllers.MarketplaceController);
+            this.ngApp.controller("workgroupController", AcademicMarketplace.Controllers.WorkgroupController);
+
+            
 
             this.ngApp.config([
-                '$stateProvider', '$urlRouterProvider',
+                "$stateProvider", "$urlRouterProvider",
                 ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {
 
                     $urlRouterProvider.otherwise(($injector) => {
@@ -29,46 +30,46 @@ module Core
                         $state.go("home");
                     });
 
-                    $stateProvider.state('home',
+                    $stateProvider.state("home",
                     {
-                        url: '/home',
+                        url: "/home",
                         views: {
-                            '': {
+                            "": {
                                 controller: "homeController",
-                                templateUrl: 'Modules/Templates/home.html'
+                                templateUrl: "Modules/Templates/home.html"
                             }
                         }
                         });
 
-                    $stateProvider.state('about',
+                    $stateProvider.state("about",
                         {
-                            url: '/about',
+                            url: "/about",
                             views: {
-                                '': {
+                                "": {
                                     controller: "aboutController",
-                                    templateUrl: 'Modules/Templates/about.html'
+                                    templateUrl: "Modules/Templates/about.html"
                                 }
                             }
                         });
 
-                    $stateProvider.state('marketplace',
+                    $stateProvider.state("marketplace",
                         {
-                            url: '/marketplace',
+                            url: "/marketplace",
                             views: {
-                                '': {
+                                "": {
                                     controller: "marketplaceController",
-                                    templateUrl: 'Modules/Templates/marketplace.html'
+                                    templateUrl: "Modules/Templates/marketplace.html"
                                 }
                             }
                         });
 
-                    $stateProvider.state('workgroups',
+                    $stateProvider.state("workgroups",
                         {
-                            url: '/workgroups',
+                            url: "/workgroups",
                             views: {
-                                '': {
+                                "": {
                                     controller: "workgroupController",
-                                    templateUrl: 'Modules/Templates/workgroups.html'
+                                    templateUrl: "Modules/Templates/workgroups.html"
                                 }
                             }
                         });
@@ -76,10 +77,10 @@ module Core
             ]);
 
             this.ngApp.run
-                (['$rootScope', '$state', 
+                (["$rootScope", "$state", 
                     ($rootScope, $state) =>
                     {
-                        $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) =>
+                        $rootScope.$on("$stateChangeStart", (event, toState, toParams, fromState, fromParams) =>
                         {
                             if (toState.title) {
                                 $rootScope.pageTitle = toState.title;

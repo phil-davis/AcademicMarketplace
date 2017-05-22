@@ -17,7 +17,7 @@ var AcademicMarketplace;
             };
             return HomeController;
         }());
-        HomeController.$inject = ['$scope', 'userService'];
+        HomeController.$inject = ["$scope", "userService"];
         Controllers.HomeController = HomeController;
     })(Controllers = AcademicMarketplace.Controllers || (AcademicMarketplace.Controllers = {}));
 })(AcademicMarketplace || (AcademicMarketplace = {}));

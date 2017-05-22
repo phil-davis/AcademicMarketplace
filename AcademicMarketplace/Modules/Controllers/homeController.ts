@@ -1,6 +1,6 @@
 ﻿module AcademicMarketplace.Controllers {
     export class HomeController {
-        static $inject = ['$scope', 'userService'];
+        static $inject = ["$scope", "userService"];
         private user: Models.UserModel.IUserModel;
 
         constructor(
