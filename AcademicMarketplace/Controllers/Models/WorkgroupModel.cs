@@ -6,6 +6,8 @@ using AcademicMarketplace.Data.Model;
 
 namespace AcademicMarketplace.Controllers.Models
 {
+    [T4TS.TypeScriptInterface(Module = "Models.WorkgroupModel")]
+
     public class WorkgroupModel
     {
         public string Code { get; set; }

@@ -28,7 +28,7 @@ namespace AcademicMarketplace.Business
 
         public List<MarketplaceListingModel> GetAll()
         {
-            return _data.GetAll();
+            return _data.GetAllListings();
         }
 
         public MarketplaceListingModel AddListing(MarketplaceListingModel post)

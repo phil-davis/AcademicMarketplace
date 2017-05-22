@@ -1,36 +1,36 @@
 ﻿module AcademicMarketplace.Controllers {
     export class MarketplaceController{
-        static $inject = ['$scope', 'postService'];
+        static $inject = ['$scope', 'marketplaceListingService'];
 
-        newPost: {};
-        allPosts: Models.PostModel.IPostModel[];
+        newListing: {};
+        allListings: Models.MarketplaceListingModel.IMarketplaceListingModel[];
         mockData: any;
 
         constructor(
             private $scope,
-            private postService: Services.PostService
+            private marketplaceListingService: Services.MarketplaceListingService
         ) {
             $scope.am = this;
             this.loadData();
         }
 
         private loadData(): any {
-            this.postService.getAll().then((response) => {
-                this.allPosts = response.data;
+            this.marketplaceListingService.getAll().then((response) => {
+                this.allListings = response.data;
             });
         }
 
-        public addPost(post: Models.PostModel.IPostModel) {
-            if (post.title.trim() !== "" && post.description.trim() !== "") {
-                this.postService.addPost(post).then(() => {
-                    this.newPost = {};
+        public addListing(listing: Models.MarketplaceListingModel.IMarketplaceListingModel) {
+            if (listing.name.trim() !== "" && listing.description.trim() !== "") {
+                this.marketplaceListingService.addListing(listing).then(() => {
+                    this.newListing = {};
                     this.loadData();
                 });
             }
         }
 
-        public deletePost(id: number) {
-            this.postService.deletePost(id).then(() => {
+        public deleteListing(id: number) {
+            this.marketplaceListingService.deleteListing(id).then(() => {
                 this.loadData();
             });
         }

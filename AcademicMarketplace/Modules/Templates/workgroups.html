@@ -1,0 +1,49 @@
+﻿<div ui-view>
+    <h1>Workgroups</h1>
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <!--<div class="col-sm-2" style="padding: 10px; float: right;">
+                    <button class="btn btn-default">Add Listing</button>
+                </div>-->
+                <div class="input-group col-sm-10" style="padding: 10px;">
+                    <label style="padding-right: 5px;">Find:</label><input ng-model="workgroupSearchTerm" />
+                </div>
+
+            </div>
+            <div class="row">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Listings</th>
+                        <th>Members</th>
+                        <th></th>
+                    </tr>
+                    <tr class="col-md-12">
+                        <td class="col-sm-2"><input type="text" ng-model="am.newWorkgroup.code" /></td>
+                        <td class="col-sm-4"><input type="text" ng-model="am.newWorkgroup.name" /></td>
+                        <td class="col-sm-2"><input type="text" ng-model="am.newWorkgroup.description" /></td>
+                        <td class="col-sm-2"></td>
+                        <td class="col-sm-2"></td>
+                        <td class="col-sm-2">
+                            <div class="btn btn-default" ng-click="am.addWorkgroup(am.newWorkgroup)">Add Workgroup</div>
+                        </td>
+                    </tr>
+                    <tr class="col-md-12" ng-repeat="item in am.allWorkgroups | filter: workgroupSearchTerm">
+                        <td class="col-sm-2" ng-bind="item.code"></td>
+                        <td class="col-sm-4" ng-bind="item.name"></td>
+                        <td class="col-sm-2" ng-bind="item.description"></td>
+                        <td></td>
+                        <td></td>
+                        <td class="col-sm-2">
+                            <div class="btn btn-default" ng-click="am.deleteWorkgroup(item)">Delete Workgroup</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

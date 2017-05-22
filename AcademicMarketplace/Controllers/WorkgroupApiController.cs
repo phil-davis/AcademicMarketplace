@@ -1,39 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using AcademicMarketplace.Controllers.Models;
 using AcademicMarketplace.Business;
+using AcademicMarketplace.Controllers.Models;
 using Microsoft.AspNet.Identity;
 
 namespace AcademicMarketplace.Controllers
 {
-    public class MarketplaceListingApiController : ApiController
+    public class WorkgroupApiController : ApiController
     {
-        private readonly IMarketplaceListingService _service;
+        private readonly IWorkgroupService _service;
 
-        public MarketplaceListingApiController()
+        public WorkgroupApiController()
         {
-            _service = new MarketplaceListingService();
+            _service = new WorkgroupService();
         }
 
         [HttpGet]
-        [Route("Marketplace/GetAll/")]
-        public List<MarketplaceListingModel> GetAll()
+        [Route("Workgroup/GetAll/")]
+        public List<WorkgroupModel> GetAll()
         {
             return _service.GetAll();
         }
 
         [Authorize]
         [HttpPost]
-        [Route("Marketplace/AddListing/")]
-        public IHttpActionResult AddListing(MarketplaceListingModel listing)
+        [Route("Workgroup/AddWorkgroup/")]
+        public IHttpActionResult AddListing(WorkgroupModel model)
         {
             try
             {
-                _service.AddListing(listing);
+                model.Users = new List<UserModel>();
+                model.Users.Add(new UserModel {
+                    Username = User.Identity.GetUserName()
+                });
+                _service.AddWorkgroup(model);
                 return Ok();
             }
             catch (Exception e)
@@ -45,12 +47,12 @@ namespace AcademicMarketplace.Controllers
 
         [Authorize]
         [HttpDelete]
-        [Route("Marketplace/DeleteListing/{id?}")]
-        public IHttpActionResult DeleteListing(int id)
+        [Route("Workgroup/DeleteWorkgroup/{code?}")]
+        public IHttpActionResult DeleteWorkgroup(string code)
         {
             try
             {
-                _service.DeleteListing(id);
+                _service.DeleteWorkgroup(code);
                 return Ok();
             }
             catch (Exception e)

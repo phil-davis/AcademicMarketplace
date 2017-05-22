@@ -11,7 +11,7 @@ declare module Models.BalanceModel {
     }
 }
 
-declare module Models.PostModel {
+declare module Models.MarketplaceListingModel {
     /** Generated from AcademicMarketplace.Controllers.Models.MarketplaceListingModel **/
     export interface IMarketplaceListingModel {
         id: number;
@@ -19,8 +19,20 @@ declare module Models.PostModel {
         name: string;
         description: string;
         image: string;
-        workgroup1: any;
-        serviceRequests: any[];
+        workgroup1: Models.WorkgroupModel.IWorkgroupModel;
+        serviceRequests: Models.ServiceRequestModel.IServiceRequestModel[];
+    }
+}
+
+declare module Models.ServiceRequestModel {
+    /** Generated from AcademicMarketplace.Controllers.Models.ServiceRequestModel **/
+    export interface IServiceRequestModel {
+        id: number;
+        marketListing: number;
+        requestedBy: string;
+        status: string;
+        requestedBy1: Models.UserModel.IUserModel;
+        marketListing1: Models.MarketplaceListingModel.IMarketplaceListingModel;
     }
 }
 
@@ -34,7 +46,18 @@ declare module Models.UserModel {
         surname: string;
         location: string;
         balance: Models.BalanceModel.IBalanceModel;
-        serviceRequests: any[];
-        workgroups: any[];
+        serviceRequests: Models.ServiceRequestModel.IServiceRequestModel[];
+        workgroups: Models.WorkgroupModel.IWorkgroupModel[];
+    }
+}
+
+declare module Models.WorkgroupModel {
+    /** Generated from AcademicMarketplace.Controllers.Models.WorkgroupModel **/
+    export interface IWorkgroupModel {
+        code: string;
+        name: string;
+        description: string;
+        marketplaceListings: Models.MarketplaceListingModel.IMarketplaceListingModel[];
+        users: Models.UserModel.IUserModel[];
     }
 }

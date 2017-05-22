@@ -14,7 +14,31 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class="panel col-md-12">
+            <div class="panel-body">
+                <div class="h3">My Workgroups:</div>
+                <div class="">
+                    <table class="table table-condensed">
+                        <tr>
+                            <th>Post Title</th>
+                            <th>Description</th>
+                            <th>Posted Date</th>
+                            <th></th>
+                        </tr>
+                        <tr class="col-md-12" ng-repeat="item in am.user.workgroups">
+                            <td class="col-sm-2" ng-bind="item.code"></td>
+                            <td class="col-sm-4" ng-bind="item.name"></td>
+                            <td class="col-sm-2" ng-bind="item.description"></td>
+                            <td class="col-sm-2">
+                                <div class="btn btn-default">See More</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="panel col-md-12">
             <div class="panel-body">
                 <div class="h3">My listings:</div>
@@ -40,24 +64,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="panel col-md-6">
-            <div class="panel-body">
-                <div class="h3">Top 10 listings:</div>
-                <div class="">
-                    <p>List of 10 most recent / most relevant marketplace listings will go here?</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel col-md-6">
-            <div class="panel-body">
-                <div class="h3">Completed listings:</div>
-                <div class="">
-                    <p>Paginated list of completed listings (completed by the user) will go here?</p>
-                </div>
-            </div>
-        </div>
+        
     </div>
     
 </div>

@@ -13,9 +13,11 @@ module Core
             this.ngApp.controller('homeController', AcademicMarketplace.Controllers.HomeController);
             this.ngApp.controller('aboutController', AcademicMarketplace.Controllers.AboutController);
             this.ngApp.controller('marketplaceController', AcademicMarketplace.Controllers.MarketplaceController);
+            this.ngApp.controller('workgroupController', AcademicMarketplace.Controllers.WorkgroupController);
 
             this.ngApp.service('userService', AcademicMarketplace.Services.UserService);
-            this.ngApp.service('postService', AcademicMarketplace.Services.PostService);
+            this.ngApp.service('marketplaceListingService', AcademicMarketplace.Services.MarketplaceListingService);
+            this.ngApp.service('workgroupService', AcademicMarketplace.Services.WorkgroupService);
 
             this.ngApp.config([
                 '$stateProvider', '$urlRouterProvider',
@@ -55,6 +57,17 @@ module Core
                                 '': {
                                     controller: "marketplaceController",
                                     templateUrl: 'Modules/Templates/marketplace.html'
+                                }
+                            }
+                        });
+
+                    $stateProvider.state('workgroups',
+                        {
+                            url: '/workgroups',
+                            views: {
+                                '': {
+                                    controller: "workgroupController",
+                                    templateUrl: 'Modules/Templates/workgroups.html'
                                 }
                             }
                         });

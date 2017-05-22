@@ -15,28 +15,26 @@
             <div class="row">
                 <table class="table table-condensed">
                     <tr>
-                        <th>Post Title</th>
+                        <th>Name</th>
+                        <th>Workgroup</th>
                         <th>Description</th>
-                        <th>Posted Date</th>
-                        <th>Posted By</th>
                         <th></th>
                     </tr>
                     <tr class="col-md-12">
-                        <td class="col-sm-2"><input type="text" ng-model="am.newPost.title"/></td>
-                        <td class="col-sm-4"><input type="text" ng-model="am.newPost.description"/></td>
-                        <td class="col-sm-2"></td>
+                        <td class="col-sm-2"><input type="text" ng-model="am.newListing.name"/></td>
+                        <td class="col-sm-4"><select ng-model="am.newListing.workgroup" ng-options="group.code for group in user.workgroups"></select></td>
+                        <td class="col-sm-2"><input type="text" ng-model="am.newListing.description" /></td>
                         <td class="col-sm-2"></td>
                         <td class="col-sm-2">
-                            <div class="btn btn-default" ng-click="am.addPost(am.newPost)">Add Post</div>
+                            <div class="btn btn-default" ng-click="am.addListing(am.newListing)">Add Post</div>
                         </td>
                     </tr>
-                    <tr class="col-md-12" ng-repeat="item in am.allPosts | filter: listingSearchTerm">
-                        <td class="col-sm-2" ng-bind="item.title"></td>
-                        <td class="col-sm-4" ng-bind="item.description"></td>
-                        <td class="col-sm-2" ng-bind="item.postedDate"></td>
-                        <td class="col-sm-2" ng-bind="item.postedByUser.username"></td>
+                    <tr class="col-md-12" ng-repeat="item in am.allListings | filter: listingSearchTerm">
+                        <td class="col-sm-2" ng-bind="item.name"></td>
+                        <td class="col-sm-4" ng-bind="item.workgroup"></td>
+                        <td class="col-sm-2" ng-bind="item.description"></td>
                         <td class="col-sm-2">
-                            <div class="btn btn-default" ng-click="am.deletePost(item.id)">Delete Post</div>
+                            <div class="btn btn-default" ng-click="am.deleteListing(item.id)">Delete Listing</div>
                         </td>
                     </tr>
                 </table>

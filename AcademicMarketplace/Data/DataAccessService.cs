@@ -15,10 +15,18 @@ namespace AcademicMarketplace.Data
 {
     interface IDataAccessService
     {
+        // User
         UserModel GetUser(string id);
-        List<MarketplaceListingModel> GetAll();
+
+        // Marketplace
+        List<MarketplaceListingModel> GetAllListings();
         MarketplaceListingModel AddListing(MarketplaceListingModel post);
         string DeleteListing(int id);
+
+        // WOrkgroups
+        List<WorkgroupModel> GetAllWorkgroups();
+        WorkgroupModel AddWorkgroup(WorkgroupModel post);
+        string DeleteWorkgroup(string code);
     }
 
     public class DataAccessService : IDataAccessService
@@ -27,7 +35,8 @@ namespace AcademicMarketplace.Data
 
         public DataAccessService()
         {
-            _context = new AcademicMarketplace.Data.Model.DefaultConnectionEntities();
+            initializeMappings();
+            _context = new DefaultConnectionEntities();
         }
 
         #region User
@@ -39,56 +48,14 @@ namespace AcademicMarketplace.Data
                 .Include(r => r.ServiceRequests)
                 .Include(w => w.Workgroups).FirstOrDefault(x => x.Id == id);
 
-            var serviceRequests = new List<ServiceRequestModel>();
-            var workgroups = new List<WorkgroupModel>();
-            var balance = new BalanceModel();
-
-            if(result.ServiceRequests != null)
-                foreach (var item in result.ServiceRequests)
-                {
-                    serviceRequests.Add(new ServiceRequestModel
-                    {
-                        Id = item.Id,
-                        MarketListing = item.MarketListing,
-                        RequestedBy = item.RequestedBy,
-                        Status = item.Status
-                    });
-                }
-            if(result.Workgroups != null)
-                foreach (var item in result.Workgroups)
-                {
-                    workgroups.Add(new WorkgroupModel
-                    {
-                        Code = item.Code,
-                        Name = item.Name,
-                        Description = item.Description,
-                    });
-                }
-            if (result.Balance != null)
-            {
-                balance.User = result.Id;
-                balance.Balance = result.Balance.Balance1;
-            }
-
-            return new UserModel
-            {
-                Id = result.Id,
-                Username = result.UserName,
-                Email = result.Email,
-                FirstName = result.FirstName,
-                Surname = result.Surname,
-                Location = result.Location,
-                Balance = balance,
-                ServiceRequests = serviceRequests,
-                Workgroups = workgroups
-            };
+            return Mapper.Map<UserModel>(result);
         }
 
         #endregion
 
-        #region Post
+        #region MarketplaceListings
 
-        public List<MarketplaceListingModel> GetAll()
+        public List<MarketplaceListingModel> GetAllListings()
         {
             var listings = _context.MarketplaceListings.ToList();
             var result = new List<MarketplaceListingModel>();
@@ -97,8 +64,7 @@ namespace AcademicMarketplace.Data
             {
                 foreach (var model in listings)
                 {
-                    var item = Mapper.Map<MarketplaceListingModel>(model);
-                    result.Add(item);
+                    result.Add(Mapper.Map<MarketplaceListingModel>(model));
                 }
             }
             return result;
@@ -145,5 +111,89 @@ namespace AcademicMarketplace.Data
         }
         #endregion
 
+        #region Workgroups
+        public List<WorkgroupModel> GetAllWorkgroups()
+        {
+            var groups = _context.Workgroups.ToList();
+            var result = new List<WorkgroupModel>();
+            if (result != null)
+            {
+                foreach (var group in groups)
+                {
+                    var item = Mapper.Map<WorkgroupModel>(group);
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        public WorkgroupModel AddWorkgroup(WorkgroupModel post)
+        {
+            var model = Mapper.Map<Workgroup>(post);
+            try
+            {
+                foreach (var user in post.Users)
+                {
+                    var newUser = _context.AspNetUsers.FirstOrDefault(x => x.UserName == user.Username);
+                    model.AspNetUsers.Add(newUser);
+                }
+                
+                _context.Workgroups.Add(model);
+                _context.SaveChanges();
+                return post;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return null;
+        }
+
+        public string DeleteWorkgroup(string code)
+        {
+            try
+            {
+                var group = _context.Workgroups.FirstOrDefault(x => x.Code == code);
+                if (group != null)
+                {
+                    _context.Workgroups.Remove(group);
+                    _context.SaveChanges();
+                    return "success";
+                }
+                else
+                {
+                    return "not found";
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return "fail";
+
+        }
+        #endregion
+
+
+        private void initializeMappings()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<UserModel, AspNetUser>();
+                cfg.CreateMap<AspNetUser, UserModel>();
+
+                cfg.CreateMap<MarketplaceListingModel, MarketplaceListing>();
+                cfg.CreateMap<MarketplaceListing, MarketplaceListingModel>();
+
+                cfg.CreateMap<WorkgroupModel, Workgroup>();
+                cfg.CreateMap<Workgroup, WorkgroupModel>();
+
+                cfg.CreateMap<ServiceRequestModel, ServiceRequest>();
+                cfg.CreateMap<ServiceRequest, ServiceRequestModel>();
+
+                cfg.CreateMap<BalanceModel, Balance>();
+                cfg.CreateMap<Balance, BalanceModel>();
+            });
+        }
     }
 }

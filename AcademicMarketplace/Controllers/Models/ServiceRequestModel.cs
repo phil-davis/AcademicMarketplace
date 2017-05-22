@@ -5,6 +5,8 @@ using System.Web;
 
 namespace AcademicMarketplace.Controllers.Models
 {
+    [T4TS.TypeScriptInterface(Module = "Models.ServiceRequestModel")]
+
     public class ServiceRequestModel
     {
         public int Id { get; set; }

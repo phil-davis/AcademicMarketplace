@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AcademicMarketplace.Controllers.Models
 {
-    [T4TS.TypeScriptInterface(Module = "Models.PostModel")]
+    [T4TS.TypeScriptInterface(Module = "Models.MarketplaceListingModel")]
     public class MarketplaceListingModel
     {
         public int Id { get; set; }

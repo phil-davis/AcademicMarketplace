@@ -1,5 +1,5 @@
 ﻿module AcademicMarketplace.Services {
-    export class PostService {
+    export class WorkgroupService {
         private httpService: any;
 
         constructor(
@@ -8,27 +8,28 @@
             this.httpService = $http;
         }
 
-        getAll(): any{
+        getAll(): any {
             return this.httpService({
                 method: 'GET',
-                url: '../GetAll/'
+                url: '../Workgroup/GetAll/'
             });
         }
 
-        addPost(newPost: Models.PostModel.IPostModel): any {
+        addWorkgroup(model: Models.WorkgroupModel.IWorkgroupModel): any {
             return this.httpService({
                 method: 'POST',
-                url: '../AddPost/',
-                data: JSON.stringify(newPost),
+                url: '../Workgroup/AddWorkgroup/',
+                data: JSON.stringify(model),
                 contentType: "application/json"
             });
         }
 
-        deletePost(id: number): any {
+        deleteWorkgroup(model: Models.WorkgroupModel.IWorkgroupModel): any {
             return this.httpService({
                 method: 'DELETE',
-                url: '../DeletePost/' + id,
-                //data: id.valueOf(),
+                url: '../Workgroup/DeleteWorkgroup/' + model.code,
+                //data: JSON.stringify(model),
+                //contentType: "application/json"
             });
         }
     }
