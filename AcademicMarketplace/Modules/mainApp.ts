@@ -5,19 +5,20 @@ module Core
     export class MainApp
     {
         "use strict";
-        public ngApp: ng.IModule;
+        //public ngApp: ng.IModule;
+        public ngApp = angular.module('mainApp', ['ui.router']);
 
         constructor() {
-            this.ngApp = angular.module('mainApp', ['ui.router']);
+            //this.ngApp = angular.module('mainApp', ['ui.router']);
+
+            this.ngApp.service('userService', AcademicMarketplace.Services.UserService);
+            this.ngApp.service('marketplaceListingService', AcademicMarketplace.Services.MarketplaceListingService);
+            this.ngApp.service('workgroupService', AcademicMarketplace.Services.WorkgroupService);
 
             this.ngApp.controller('homeController', AcademicMarketplace.Controllers.HomeController);
             this.ngApp.controller('aboutController', AcademicMarketplace.Controllers.AboutController);
             this.ngApp.controller('marketplaceController', AcademicMarketplace.Controllers.MarketplaceController);
             this.ngApp.controller('workgroupController', AcademicMarketplace.Controllers.WorkgroupController);
-
-            this.ngApp.service('userService', AcademicMarketplace.Services.UserService);
-            this.ngApp.service('marketplaceListingService', AcademicMarketplace.Services.MarketplaceListingService);
-            this.ngApp.service('workgroupService', AcademicMarketplace.Services.WorkgroupService);
 
             this.ngApp.config([
                 '$stateProvider', '$urlRouterProvider',
