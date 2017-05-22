@@ -48,7 +48,9 @@ namespace AcademicMarketplace.Data
                 .Include(r => r.ServiceRequests)
                 .Include(w => w.Workgroups).FirstOrDefault(x => x.Id == id);
 
-            return Mapper.Map<UserModel>(result);
+            var newUser = Mapper.Map<UserModel>(result);
+            newUser.Balance = Mapper.Map<BalanceModel>(result.Balance);
+            return newUser;
         }
 
         #endregion
@@ -114,15 +116,12 @@ namespace AcademicMarketplace.Data
         #region Workgroups
         public List<WorkgroupModel> GetAllWorkgroups()
         {
-            var groups = _context.Workgroups.ToList();
-            var result = new List<WorkgroupModel>();
-            if (result != null)
+            var groups = _context.Workgroups
+                .Include(x => x.AspNetUsers).ToList();
+            var result = Mapper.Map<List<WorkgroupModel>>(groups);
+            foreach (var item in result)
             {
-                foreach (var group in groups)
-                {
-                    var item = Mapper.Map<WorkgroupModel>(group);
-                    result.Add(item);
-                }
+                item.Users = Mapper.Map<List<UserModel>>(groups.FirstOrDefault(x => x.Code == item.Code).AspNetUsers);
             }
             return result;
         }

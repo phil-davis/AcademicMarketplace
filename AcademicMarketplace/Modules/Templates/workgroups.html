@@ -39,7 +39,7 @@
                         <td></td>
                         <td></td>
                         <td class="col-sm-2">
-                            <div class="btn btn-default" ng-click="am.deleteWorkgroup(item)">Delete Workgroup</div>
+                            <div class="btn btn-default" ng-show="am.userInWorkgroup(item)" ng-click="am.deleteWorkgroup(item)">Delete Workgroup</div>
                         </td>
                     </tr>
                 </table>
