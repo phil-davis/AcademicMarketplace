@@ -1,5 +1,7 @@
 ﻿module AcademicMarketplace.Services {
     export class MarketplaceListingService {
+        static $inject = ["$http"];
+
         private httpService: any;
 
         constructor(

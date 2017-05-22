@@ -21,4 +21,3 @@ var AcademicMarketplace;
         Controllers.HomeController = HomeController;
     })(Controllers = AcademicMarketplace.Controllers || (AcademicMarketplace.Controllers = {}));
 })(AcademicMarketplace || (AcademicMarketplace = {}));
-//# sourceMappingURL=homeController.js.map

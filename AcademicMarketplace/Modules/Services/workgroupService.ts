@@ -1,5 +1,7 @@
 ﻿module AcademicMarketplace.Services {
     export class WorkgroupService {
+        static $inject = ["$http"];
+
         private httpService: any;
 
         constructor(
