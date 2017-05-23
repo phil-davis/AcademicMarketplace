@@ -3,8 +3,7 @@ solution: .\AcademicMarketplace\AcademicMarketplace.sln
 
 dist: trusty
 sudo: required
-mono: none
-dotnet: 1.0.1
+mono: latest
 branches:
   only:
     - master
@@ -13,7 +12,6 @@ before_script:
   - chmod a+x ./travis-build.sh
   - chmod a+x ./run-tests.sh
   - chmod a+x ./after-success.sh
-  - npm install --msvs_version=2013
 script:
   - ./travis-build.sh
   - ./run-tests.sh
