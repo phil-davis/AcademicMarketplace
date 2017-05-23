@@ -12,6 +12,6 @@ namespace AcademicMarketplace.Controllers.Models
         public string User { get; set; }
         public int? Balance { get; set; }
 
-        public virtual UserModel User1 { get; set; }
+        //public virtual UserModel User1 { get; set; }
     }
 }

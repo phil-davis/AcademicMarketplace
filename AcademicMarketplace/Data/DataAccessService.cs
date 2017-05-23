@@ -49,7 +49,10 @@ namespace AcademicMarketplace.Data
                 .Include(w => w.Workgroups).FirstOrDefault(x => x.Id == id);
 
             var newUser = Mapper.Map<UserModel>(result);
-            newUser.Balance = Mapper.Map<BalanceModel>(result.Balance);
+            if(result.Balance != null)
+                newUser.Balance = Mapper.Map<BalanceModel>(result.Balance);
+            else
+                newUser.Balance = null;
             return newUser;
         }
 
@@ -60,15 +63,15 @@ namespace AcademicMarketplace.Data
         public List<MarketplaceListingModel> GetAllListings()
         {
             var listings = _context.MarketplaceListings.ToList();
-            var result = new List<MarketplaceListingModel>();
-            //var result = Mapper.Map<List<MarketplaceListingModel>>(_context.MarketplaceListings.ToList());
-            if (result != null)
-            {
-                foreach (var model in listings)
-                {
-                    result.Add(Mapper.Map<MarketplaceListingModel>(model));
-                }
-            }
+            //var result = new List<MarketplaceListingModel>();
+            var result = Mapper.Map<List<MarketplaceListingModel>>(listings);
+            //if (result != null)
+            //{
+            //    foreach (var model in listings)
+            //    {
+            //        result.Add(Mapper.Map<MarketplaceListingModel>(model));
+            //    }
+            //}
             return result;
         }
 
@@ -117,7 +120,7 @@ namespace AcademicMarketplace.Data
         public List<WorkgroupModel> GetAllWorkgroups()
         {
             var groups = _context.Workgroups
-                .Include(x => x.AspNetUsers).ToList();
+                .Include(x => x.AspNetUsers);
             var result = Mapper.Map<List<WorkgroupModel>>(groups);
             foreach (var item in result)
             {
@@ -126,12 +129,12 @@ namespace AcademicMarketplace.Data
             return result;
         }
 
-        public WorkgroupModel AddWorkgroup(WorkgroupModel post)
+        public WorkgroupModel AddWorkgroup(WorkgroupModel group)
         {
-            var model = Mapper.Map<Workgroup>(post);
+            var model = Mapper.Map<Workgroup>(group);
             try
             {
-                foreach (var user in post.Users)
+                foreach (var user in group.Users)
                 {
                     var newUser = _context.AspNetUsers.FirstOrDefault(x => x.UserName == user.Username);
                     model.AspNetUsers.Add(newUser);
@@ -139,7 +142,7 @@ namespace AcademicMarketplace.Data
                 
                 _context.Workgroups.Add(model);
                 _context.SaveChanges();
-                return post;
+                return group;
             }
             catch (Exception e)
             {
@@ -182,7 +185,7 @@ namespace AcademicMarketplace.Data
                 cfg.CreateMap<AspNetUser, UserModel>();
 
                 cfg.CreateMap<MarketplaceListingModel, MarketplaceListing>();
-                cfg.CreateMap<MarketplaceListing, MarketplaceListingModel>();
+                cfg.CreateMap<MarketplaceListing, MarketplaceListingModel>().ForMember(x => x.Workgroup1, opt => opt.Ignore());
 
                 cfg.CreateMap<WorkgroupModel, Workgroup>();
                 cfg.CreateMap<Workgroup, WorkgroupModel>();

@@ -26,13 +26,22 @@ namespace AcademicMarketplace.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("Workgroup/GetUserWorkgroups/")]
+        public List<WorkgroupModel> GetUserWorkgroups(UserModel user)
+        {
+            return _service.GetUserWorkgroups(user);
+        }
+
+        [Authorize]
+        [HttpPost]
         [Route("Workgroup/AddWorkgroup/")]
         public IHttpActionResult AddListing(WorkgroupModel model)
         {
             try
             {
                 model.Users = new List<UserModel>();
-                model.Users.Add(new UserModel {
+                model.Users.Add(new UserModel
+                {
                     Username = User.Identity.GetUserName()
                 });
                 _service.AddWorkgroup(model);

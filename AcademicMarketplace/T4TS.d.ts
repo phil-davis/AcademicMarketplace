@@ -7,7 +7,6 @@ declare module Models.BalanceModel {
     export interface IBalanceModel {
         user: string;
         balance?: number;
-        user1: Models.UserModel.IUserModel;
     }
 }
 

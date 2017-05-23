@@ -11,6 +11,7 @@ namespace AcademicMarketplace.Business
     public interface IWorkgroupService
     {
         List<WorkgroupModel> GetAll();
+        List<WorkgroupModel> GetUserWorkgroups(UserModel user);
         WorkgroupModel AddWorkgroup(WorkgroupModel model);
         string DeleteWorkgroup(string code);
     }
@@ -27,6 +28,12 @@ namespace AcademicMarketplace.Business
         public List<WorkgroupModel> GetAll()
         {
             return _data.GetAllWorkgroups();
+        }
+
+        public List<WorkgroupModel> GetUserWorkgroups(UserModel user)
+        {
+            var userObj = _data.GetUser(user.Id);
+            return userObj.Workgroups;
         }
 
         public WorkgroupModel AddWorkgroup(WorkgroupModel model)
