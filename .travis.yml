@@ -1,5 +1,5 @@
 language: csharp
-solution: ./AcademicMarketplace/AcademicMarketplace.sln
+solution: ./AcademicMarketplace.sln
 
 dist: trusty
 sudo: required
