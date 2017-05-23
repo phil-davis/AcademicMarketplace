@@ -1,3 +1,3 @@
 #!/bin/bash
 dotnet restore
-dotnet build **/Application.AcademicMarketplace.csproj
+dotnet build AcademicMarketplace/Application.AcademicMarketplace.csproj
