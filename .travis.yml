@@ -4,7 +4,21 @@ solution: .\AcademicMarketplace\AcademicMarketplace.sln
 dist: trusty
 sudo: required
 mono: none
-dotnet: 1.0.0-preview2-003131
-
+dotnet: 1.0.0-preview2-003177
+branches:
+  only:
+    - master
+    - develop
+before_script:
+  - chmod a+x ./travis-build.sh
+  - chmod a+x ./run-tests.sh
+  - chmod a+x ./after-success.sh
 script:
-  - dotnet restore
+  - ./travis-build.sh
+  - ./run-tests.sh
+after_success:
+  - ./after-success.sh
+notifications:
+  email:
+    on_success: never
+    on_failure: never
