@@ -3,7 +3,8 @@ solution: ./AcademicMarketplace.sln
 
 dist: trusty
 sudo: required
-mono: latest
+mono: none
+dotnet: 1.0.1
 branches:
   only:
     - master
