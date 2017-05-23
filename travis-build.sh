@@ -1,4 +1,7 @@
 #!/bin/bash
 pwd
+echo "Doing dotnet restore"
 dotnet restore
-# dotnet build AcademicMarketplace/AcademicMarketplace/Application.AcademicMarketplace.csproj
+echo "Doing dotnet build"
+dotnet build ./AcademicMarketplace/Application.AcademicMarketplace.csproj
+echo "end of travis-build"
