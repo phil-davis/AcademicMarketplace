@@ -252,6 +252,7 @@ GO
 
 ALTER TABLE [dbo].[MarketplaceListing]  WITH CHECK ADD  CONSTRAINT [FK_MarketplaceListing-Workgroup_Workgroup-Code] FOREIGN KEY([Workgroup])
 REFERENCES [dbo].[Workgroup] ([Code])
+ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[MarketplaceListing] CHECK CONSTRAINT [FK_MarketplaceListing-Workgroup_Workgroup-Code]
