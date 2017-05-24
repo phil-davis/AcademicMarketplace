@@ -41,7 +41,7 @@
                         <td class="col-sm-1" ng-bind="item.marketplaceListings.length"></td>
                         <td class="col-sm-1" ng-bind="item.users.length"></td>
                         <td class="col-sm-2">
-                            <div class="btn btn-default" ng-show="am.userInWorkgroup(item)" ng-click="am.deleteWorkgroup(item)">Delete Workgroup</div>
+                            <div class="btn btn-default" ng-show="am.userInWorkgroup(item) || am.isAdmin()" ng-click="am.deleteWorkgroup(item)">Delete Workgroup</div>
                         </td>
                     </tr>
                 </table>
@@ -82,8 +82,8 @@
                 <hr class="borderless" />
                 <div>
                     <div class="btn btn-default" ng-click="am.viewingWorkgroupInfo = false">Back to Workgroups</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.editWorkgroup(am.currentWorkgroup)" ng-if="!am.editingWorkgroupInfo">Edit</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.deleteWorkgroup(am.currentWorkgroup)">Delete</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup) || am.isAdmin()" ng-click="am.editWorkgroup(am.currentWorkgroup)" ng-if="!am.editingWorkgroupInfo">Edit</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup) || am.isAdmin()" ng-click="am.deleteWorkgroup(am.currentWorkgroup)">Delete</div>
                 </div>
             </div>
         </div>
@@ -118,8 +118,8 @@
                 <hr class="borderless" />
                 <div>
                     <div class="btn btn-default" ng-click="am.showAllWorkgroups()">Back to Workgroups</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.saveEdit(am.newWorkgroup)">Save</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.cancelEditWorkgroup()">Cancel</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup) || am.isAdmin()" ng-click="am.saveEdit(am.newWorkgroup)">Save</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup) || am.isAdmin()" ng-click="am.cancelEditWorkgroup()">Cancel</div>
                 </div>
             </div>
         </div>

@@ -27,7 +27,12 @@ namespace AcademicMarketplace.Controllers
         {
             try
             {
-                return _service.GetUser(User.Identity.GetUserId());
+                var user = _service.GetUser(User.Identity.GetUserId());
+                if (User.IsInRole("Admin"))
+                    user.Admin = true;
+                else
+                    user.Admin = false;
+                return user;
             }
             catch (Exception e)
             {

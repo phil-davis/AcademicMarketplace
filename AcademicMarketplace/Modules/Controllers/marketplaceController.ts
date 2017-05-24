@@ -95,5 +95,9 @@
             }
             return false;
         }
+
+        public isAdmin() {
+            return this.user.admin;
+        }
     }
 }

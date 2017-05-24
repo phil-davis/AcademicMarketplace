@@ -19,5 +19,7 @@ namespace AcademicMarketplace.Controllers.Models
         public virtual BalanceModel Balance { get; set; }
         public virtual List<ServiceRequestModel> ServiceRequests { get; set; }
         public virtual List<WorkgroupModel> Workgroups { get; set; }
+
+        public bool Admin { get; set; }
     }
 }

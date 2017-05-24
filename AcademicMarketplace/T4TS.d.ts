@@ -47,6 +47,7 @@ declare module Models.UserModel {
         balance: Models.BalanceModel.IBalanceModel;
         serviceRequests: Models.ServiceRequestModel.IServiceRequestModel[];
         workgroups: Models.WorkgroupModel.IWorkgroupModel[];
+        admin: boolean;
     }
 }
 

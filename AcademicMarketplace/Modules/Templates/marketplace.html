@@ -34,7 +34,7 @@
                         <td class="col-sm-2" ng-bind="item.workgroup"></td>
                         <td class="col-sm-6" ng-bind="item.description"></td>
                         <td class="col-sm-2">
-                            <div class="btn btn-default" ng-show="am.userInWorkgroup(item)" ng-click="am.deleteListing(item.id)">Delete Listing</div>
+                            <div class="btn btn-default" ng-show="am.userInWorkgroup(item) || am.isAdmin()" ng-click="am.deleteListing(item.id)">Delete Listing</div>
                         </td>
                     </tr>
                 </table>
@@ -64,8 +64,8 @@
                 <hr class="borderless"/>
                 <div>
                     <div class="btn btn-default" ng-click="am.viewingListingInfo = false">Back to Listings</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.editListing(am.currentListing)" ng-if="!am.editingListingInfo">Edit</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.deleteListing(am.currentListing.id)">Delete</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing) || am.isAdmin()" ng-click="am.editListing(am.currentListing)" ng-if="!am.editingListingInfo">Edit</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing) || am.isAdmin()" ng-click="am.deleteListing(am.currentListing.id)">Delete</div>
                 </div>
             </div>
         </div>
@@ -90,8 +90,8 @@
                 <hr class="borderless"/>
                 <div>
                     <div class="btn btn-default" ng-click="am.showAllListings()">Back to Listings</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.saveEdit(am.newListing)">Save</div>
-                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.cancelEditListing()">Cancel</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing) || am.isAdmin()" ng-click="am.saveEdit(am.newListing)">Save</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing) || am.isAdmin()" ng-click="am.cancelEditListing()">Cancel</div>
                 </div>
             </div>
         </div>
