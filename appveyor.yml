@@ -9,10 +9,14 @@ before_build:
   - nuget restore AcademicMarketplace.sln
   - npm install --save-dev frisby
 
+build_script:
+  - dotnet build
+  - dotnet build
+
 test_script:
-- cmd: echo About to run it
-- cmd: dotnet AcademicMarketplace\bin\AcademicMarketplace.dll
-- cmd: echo Run has finished
+  - cmd: echo About to run it
+  - cmd: dotnet AcademicMarketplace\bin\AcademicMarketplace.dll
+  - cmd: echo Run has finished
 
 test:
   assemblies:
