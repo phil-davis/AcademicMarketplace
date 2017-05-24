@@ -10,4 +10,4 @@ before_build:
 
 test:
   assemblies:
-- '**\*.UnitTesting.dll'
+    - '**\*.UnitTesting.dll'
