@@ -1,5 +1,6 @@
 ﻿<div ui-view>
-    <div class="panel borderless">
+    <!-- VIEWING ALL WORKGROUPS -->
+    <div class="panel borderless" ng-if="!am.viewingWorkgroupInfo && !am.editingWorkgroupInfo">
         <div class="panel-heading borderless">
             <h1 class="h1">Workgroups</h1>
         </div>
@@ -34,7 +35,7 @@
                         </td>
                     </tr>
                     <tr class="col-md-12" ng-repeat="item in am.allWorkgroups | filter: workgroupSearchTerm">
-                        <td class="col-sm-2" ng-bind="item.code"></td>
+                        <td class="col-sm-2 btn-link" ng-bind="item.code" ng-click="am.showWorkgroup(item)"></td>
                         <td class="col-sm-2" ng-bind="item.name"></td>
                         <td class="col-sm-4" ng-bind="item.description"></td>
                         <td class="col-sm-1" ng-bind="item.marketplaceListings.length"></td>
@@ -44,6 +45,82 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- VIWING SINGLE WORKGROUP -->
+    <div class="panel borderless" ng-if="am.viewingWorkgroupInfo">
+        <!-- VIEWING -->
+        <div ng-if="!am.editingWorkgroupInfo">
+            <div class="panel-heading borderless">
+                <div class="row">
+                    <h1 class="h2">{{am.currentWorkgroup.code}}</h1>
+                </div>
+            </div>
+            <div class="panel-body borderless">
+                <div>
+                    <div class="h4">Group Name:</div>
+                    <p class="body-content">{{am.currentWorkgroup.name}}</p>
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="h4">Description:</div>
+                    <p class="body-content" ng-bind="am.currentWorkgroup.description"></p>
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="h4">Listings:</div>
+                    <p class="body-content" ng-bind="am.currentWorkgroup.marketplaceListings.length"></p>
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="h4">Users:</div>
+                    <p class="body-content" ng-bind="am.currentWorkgroup.users.length"></p>
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="btn btn-default" ng-click="am.viewingWorkgroupInfo = false">Back to Workgroups</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.editWorkgroup(am.currentWorkgroup)" ng-if="!am.editingWorkgroupInfo">Edit</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.deleteWorkgroup(am.currentWorkgroup)">Delete</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EDITING -->
+        <div ng-if="am.editingWorkgroupInfo">
+            <div class="panel-heading borderless">
+                <div class="row">
+                    <input type="text" class="input-lg form-control" ng-model="am.newWorkgroup.code" />
+                </div>
+            </div>
+            <div class="panel-body borderless">
+                <div>
+                    <div class="h4">Group Name:</div>
+                    <input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.name" />
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="h4">Description:</div>
+                    <input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.description" />
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="h4">Listings:</div>
+                    <p class="body-content" ng-bind="am.newWorkgroup.marketplaceListings.length"></p>
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="h4">Users:</div>
+                    <p class="body-content" ng-bind="am.newWorkgroup.users.length"></p>
+                </div>
+                <hr class="borderless" />
+                <div>
+                    <div class="btn btn-default" ng-click="am.showAllWorkgroups()">Back to Workgroups</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.saveEdit(am.newWorkgroup)">Save</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentWorkgroup)" ng-click="am.cancelEditWorkgroup()">Cancel</div>
+                </div>
             </div>
         </div>
     </div>

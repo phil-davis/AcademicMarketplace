@@ -13,6 +13,7 @@ namespace AcademicMarketplace.Business
         List<WorkgroupModel> GetAll();
         List<WorkgroupModel> GetUserWorkgroups(UserModel user);
         WorkgroupModel AddWorkgroup(WorkgroupModel model);
+        WorkgroupModel EditWorkgroup(WorkgroupModel model);
         string DeleteWorkgroup(string code);
     }
 
@@ -39,6 +40,11 @@ namespace AcademicMarketplace.Business
         public WorkgroupModel AddWorkgroup(WorkgroupModel model)
         {
             return _data.AddWorkgroup(model);
+        }
+
+        public WorkgroupModel EditWorkgroup(WorkgroupModel model)
+        {
+            return _data.EditWorkgroup(model);
         }
 
         public string DeleteWorkgroup(string code)

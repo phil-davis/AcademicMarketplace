@@ -26,6 +26,15 @@
             });
         }
 
+        editWorkgroup(model: Models.WorkgroupModel.IWorkgroupModel): any {
+            return this.httpService({
+                method: "PUT",
+                url: "../Workgroup/EditWorkgroup/",
+                data: JSON.stringify(model),
+                contentType: "application/json"
+            });
+        }
+
         deleteWorkgroup(model: Models.WorkgroupModel.IWorkgroupModel): any {
             return this.httpService({
                 method: "DELETE",

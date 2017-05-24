@@ -55,6 +55,23 @@ namespace AcademicMarketplace.Controllers
         }
 
         [Authorize]
+        [HttpPut]
+        [Route("Workgroup/EditWorkgroup/")]
+        public WorkgroupModel EditWorkgroup(WorkgroupModel model)
+        {
+            try
+            {
+                var edited = _service.EditWorkgroup(model);
+                return edited;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return model;
+        }
+
+        [Authorize]
         [HttpDelete]
         [Route("Workgroup/DeleteWorkgroup/{code?}")]
         public IHttpActionResult DeleteWorkgroup(string code)

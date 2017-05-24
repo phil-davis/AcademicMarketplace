@@ -20,12 +20,14 @@ namespace AcademicMarketplace.Data
 
         // Marketplace
         List<MarketplaceListingModel> GetAllListings();
-        MarketplaceListingModel AddListing(MarketplaceListingModel post);
+        MarketplaceListingModel AddListing(MarketplaceListingModel newListing);
+        MarketplaceListingModel EditListing(MarketplaceListingModel listing);
         string DeleteListing(int id);
 
         // WOrkgroups
         List<WorkgroupModel> GetAllWorkgroups();
-        WorkgroupModel AddWorkgroup(WorkgroupModel post);
+        WorkgroupModel AddWorkgroup(WorkgroupModel group);
+        WorkgroupModel EditWorkgroup(WorkgroupModel group);
         string DeleteWorkgroup(string code);
     }
 
@@ -75,20 +77,42 @@ namespace AcademicMarketplace.Data
             return result;
         }
 
-        public MarketplaceListingModel AddListing(MarketplaceListingModel post)
+        public MarketplaceListingModel AddListing(MarketplaceListingModel newListing)
         {
-            var model = Mapper.Map<MarketplaceListing>(post);
+            var model = Mapper.Map<MarketplaceListing>(newListing);
             try
             {
-                _context.MarketplaceListings.Add(model);
+                var modelListing = _context.MarketplaceListings.Add(model);
                 _context.SaveChanges();
-                return post;
+                return Mapper.Map<MarketplaceListingModel>(modelListing);
+                //return newListing;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
             return null;
+        }
+
+        public MarketplaceListingModel EditListing(MarketplaceListingModel listing)
+        {
+            var model = Mapper.Map<MarketplaceListing>(listing);
+            try
+            {
+                var entry = _context.MarketplaceListings.SingleOrDefault(x => x.Id == model.Id);
+                if (entry != null)
+                {
+                    _context.Entry(entry).CurrentValues.SetValues(model);
+                    _context.SaveChanges();
+                    return Mapper.Map<MarketplaceListingModel>(entry);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
+            return listing;
         }
 
         public string DeleteListing(int id)
@@ -149,6 +173,27 @@ namespace AcademicMarketplace.Data
                 Console.WriteLine(e);
             }
             return null;
+        }
+
+        public WorkgroupModel EditWorkgroup(WorkgroupModel group)
+        {
+            var model = Mapper.Map<WorkgroupModel>(group);
+            try
+            {
+                var entry = _context.Workgroups.SingleOrDefault(x => x.Code == model.Code);
+                if (entry != null)
+                {
+                    _context.Entry(entry).CurrentValues.SetValues(model);
+                    _context.SaveChanges();
+                    return Mapper.Map<WorkgroupModel>(entry);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return group;
         }
 
         public string DeleteWorkgroup(string code)

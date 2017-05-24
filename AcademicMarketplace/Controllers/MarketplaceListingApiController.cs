@@ -44,6 +44,23 @@ namespace AcademicMarketplace.Controllers
         }
 
         [Authorize]
+        [HttpPut]
+        [Route("Marketplace/EditListing/")]
+        public MarketplaceListingModel EditListing(MarketplaceListingModel listing)
+        {
+            try
+            {
+                var edited = _service.EditListing(listing);
+                return edited;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return listing;
+        }
+
+        [Authorize]
         [HttpDelete]
         [Route("Marketplace/DeleteListing/{id?}")]
         public IHttpActionResult DeleteListing(int id)

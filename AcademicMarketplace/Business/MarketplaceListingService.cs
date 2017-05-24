@@ -13,7 +13,8 @@ namespace AcademicMarketplace.Business
     public interface IMarketplaceListingService
     {
         List<MarketplaceListingModel> GetAll();
-        MarketplaceListingModel AddListing(MarketplaceListingModel post);
+        MarketplaceListingModel AddListing(MarketplaceListingModel newListing);
+        MarketplaceListingModel EditListing(MarketplaceListingModel listing);
         string DeleteListing(int id);
     }
 
@@ -31,9 +32,14 @@ namespace AcademicMarketplace.Business
             return _data.GetAllListings();
         }
 
-        public MarketplaceListingModel AddListing(MarketplaceListingModel post)
+        public MarketplaceListingModel AddListing(MarketplaceListingModel newListing)
         {
-            return _data.AddListing(post);
+            return _data.AddListing(newListing);
+        }
+
+        public MarketplaceListingModel EditListing(MarketplaceListingModel listing)
+        {
+            return _data.EditListing(listing);
         }
 
         public string DeleteListing(int id)

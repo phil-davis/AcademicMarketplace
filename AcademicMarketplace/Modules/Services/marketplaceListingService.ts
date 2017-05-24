@@ -26,6 +26,15 @@
             });
         }
 
+        editListing(listing: Models.MarketplaceListingModel.IMarketplaceListingModel): any {
+            return this.httpService({
+                method: "PUT",
+                url: "../Marketplace/EditListing/",
+                data: JSON.stringify(listing),
+                contentType: "application/json"
+            });
+        }
+
         deleteListing(id: number): any {
             return this.httpService({
                 method: "DELETE",

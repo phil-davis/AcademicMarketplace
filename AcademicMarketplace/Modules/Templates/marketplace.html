@@ -1,5 +1,6 @@
 ﻿<div ui-view>
-    <div class="panel borderless" ng-if="!am.viewingListingInfo">
+    <!-- VIWING ALL LISTINGS TABLE -->
+    <div class="panel borderless" ng-if="!am.viewingListingInfo && !am.editingListingInfo">
         <div class="panel-heading borderless">
             <h1 class="h1">Marketplace Listings:</h1>
         </div>
@@ -41,26 +42,59 @@
         </div>
     </div>
 
+    <!-- VIWING SINGLE LISTING -->
     <div class="panel borderless" ng-if="am.viewingListingInfo">
-        <div class="panel-heading borderless">
-            <div class="row">
-                <h1 class="h2">{{am.currentListing.name}}</h1>
+        <!-- VIEWING -->
+        <div ng-if="!am.editingListingInfo">
+            <div class="panel-heading borderless">
+                <div class="row">
+                    <h1 class="h2">{{am.currentListing.name}}</h1>
+                </div>
+            </div>
+            <div class="panel-body borderless">
+                <div>
+                    <div class="h4">Workgroup:</div>
+                    <p class="body-content">{{am.currentListing.workgroup}}</p>
+                </div>
+                <hr class="borderless"/>
+                <div>
+                    <div class="h4">Description:</div>
+                    <p class="body-content" ng-bind="am.currentListing.description"></p>
+                </div>
+                <hr class="borderless"/>
+                <div>
+                    <div class="btn btn-default" ng-click="am.viewingListingInfo = false">Back to Listings</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.editListing(am.currentListing)" ng-if="!am.editingListingInfo">Edit</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.deleteListing(am.currentListing.id)">Delete</div>
+                </div>
             </div>
         </div>
-        <div class="panel-body borderless">
-            <div>
-                <div class="h4">Posted by:</div>
-                <p class="body-content">{{am.currentListing.workgroup}}</p>
+
+        <!-- EDITING -->
+        <div ng-if="am.editingListingInfo">
+            <div class="panel-heading borderless">
+                <div class="row">
+                    <input type="text" class="input-lg form-control" ng-model="am.newListing.name"/>
+                </div>
             </div>
-            <hr class="borderless"/>
-            <div>
-                <div class="h4">Description:</div>
-                <p class="body-content" ng-bind="am.currentListing.description"></p>
-            </div>
-            <hr class="borderless" />
-            <div>
-                <div class="btn btn-default" ng-click="am.viewingListingInfo = false">Show All</div>
+            <div class="panel-body borderless">
+                <div>
+                    <div class="h4">Workgroup:</div>
+                    <select class="input-sm form-control" ng-model="am.newListing.workgroup" ng-options="group.code as group.code for group in am.user.workgroups" required></select>
+                </div>
+                <hr class="borderless"/>
+                <div>
+                    <div class="h4">Description:</div>
+                    <input type="text" class="input-sm form-control" ng-model="am.newListing.description"/>
+                </div>
+                <hr class="borderless"/>
+                <div>
+                    <div class="btn btn-default" ng-click="am.showAllListings()">Back to Listings</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.saveEdit(am.newListing)">Save</div>
+                    <div class="btn btn-default" ng-show="am.userInWorkgroup(am.currentListing)" ng-click="am.cancelEditListing()">Cancel</div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
