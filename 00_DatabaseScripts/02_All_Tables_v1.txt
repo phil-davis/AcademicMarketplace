@@ -222,6 +222,7 @@ GO
 
 ALTER TABLE [dbo].[WorkgroupUser]  WITH CHECK ADD  CONSTRAINT [FK_WorkgroupUser-WorkgroupCode_Workgroup-Code] FOREIGN KEY([WorkgroupCode])
 REFERENCES [dbo].[Workgroup] ([Code])
+ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
 
@@ -252,6 +253,7 @@ GO
 
 ALTER TABLE [dbo].[MarketplaceListing]  WITH CHECK ADD  CONSTRAINT [FK_MarketplaceListing-Workgroup_Workgroup-Code] FOREIGN KEY([Workgroup])
 REFERENCES [dbo].[Workgroup] ([Code])
+ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
 

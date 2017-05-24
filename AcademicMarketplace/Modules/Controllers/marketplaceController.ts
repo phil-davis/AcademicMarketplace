@@ -5,7 +5,7 @@
         private viewingListingInfo = false;
         private editingListingInfo = false;
 
-        private newListing: Models.MarketplaceListingModel.IMarketplaceListingModel;
+        private newListing: {};
         private currentListing: Models.MarketplaceListingModel.IMarketplaceListingModel;
         private allListings: Models.MarketplaceListingModel.IMarketplaceListingModel[];
         
@@ -36,7 +36,7 @@
             if (listing.name != null && listing.description != null) {
                 if (listing.name.trim() !== "" && listing.description.trim() !== "") {
                     this.marketplaceListingService.addListing(listing).then(() => {
-                        this.newListing = { id: null, workgroup: null, name: null, description: null, image: null, workgroup1: null, serviceRequests: null };
+                        this.newListing = {};
                         this.loadData();
                     });
                 }
@@ -52,21 +52,22 @@
         public showAllListings() {
             this.viewingListingInfo = false;
             this.editingListingInfo = false;
-            this.newListing = { id: null, workgroup: null, name: null, description: null, image: null, workgroup1: null, serviceRequests: null };
+            this.newListing = {};
         }
 
         public editListing(listing: Models.MarketplaceListingModel.IMarketplaceListingModel) {
             this.editingListingInfo = true;
-            this.newListing = listing;
+            this.newListing = angular.copy(listing);
         }
 
         public cancelEditListing() {
             this.editingListingInfo = false;
-            this.newListing = { id: null, workgroup: null, name: null, description: null, image: null, workgroup1: null, serviceRequests: null };
+            this.newListing = {};
         }
 
         public saveEdit(listing: Models.MarketplaceListingModel.IMarketplaceListingModel) {
             this.marketplaceListingService.editListing(listing).then(() => {
+                this.currentListing = listing;
                 this.cancelEditListing();
                 this.loadData();
             });

@@ -53,7 +53,7 @@
 
         public editWorkgroup(group: Models.WorkgroupModel.IWorkgroupModel) {
             this.editingWorkgroupInfo = true;
-            this.newWorkgroup = group;
+            this.newWorkgroup = angular.copy(group);
         }
 
         public cancelEditWorkgroup() {
@@ -63,6 +63,7 @@
 
         public saveEdit(group: Models.WorkgroupModel.IWorkgroupModel) {
             this.workgroupService.editWorkgroup(group).then(() => {
+                this.currentWorkgroup = group;
                 this.cancelEditWorkgroup();
                 this.loadData();
             });
