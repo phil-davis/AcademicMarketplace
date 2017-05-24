@@ -14,8 +14,7 @@ build_script:
 
 test_script:
   - cmd: echo About to start it
-  - cmd: Regsvr32 AcademicMarketplace\bin\AcademicMarketplace.dll
-  - ps: Start-Process AcademicMarketplace\bin\AcademicMarketplace.dll
+  - cmd: START /B "" AcademicMarketplace\bin\AcademicMarketplace.dll
   - cmd: echo Start is done
 
 test:
