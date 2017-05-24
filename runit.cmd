@@ -1,1 +1,1 @@
-C:\projects\academicmarketplace\AcademicMarketplace\bin\AcademicMarketplace.dll
+C:\projects\academicmarketplace\AcademicMarketplace\bin\AcademicMarketplace1.dll
