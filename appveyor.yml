@@ -14,8 +14,10 @@ build_script:
 
 test_script:
   - cmd: echo About to start it
-  - cmd: test.cmd
+  - ps: $MyProcess = Start-Process notepad.exe -PassThru
   - cmd: echo Start is done
+  - ps: Stop-Process -Id $MyProcess.Id
+  - cmd: echo Stop is done
 
 test:
   assemblies:
