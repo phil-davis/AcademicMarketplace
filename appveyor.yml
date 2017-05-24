@@ -18,6 +18,7 @@ test_script:
   - cmd: echo Start is done
   - ps: Start-Sleep -s 10
   - cmd: echo Sleep is done
+  - cmd: jasmine-node api_tests/
   - ps: Stop-Process -Id $MyProcess.Id
   - cmd: echo Stop is done
 
