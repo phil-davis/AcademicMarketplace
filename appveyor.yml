@@ -10,8 +10,8 @@ before_build:
   - npm install --save-dev frisby
 
 build_script:
-  - dotnet build
-  - dotnet build
+  - msbuild "C:\projects\academicmarketplace\AcademicMarketplace.sln" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - msbuild "C:\projects\academicmarketplace\AcademicMarketplace.sln" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 test_script:
   - cmd: echo About to run it
