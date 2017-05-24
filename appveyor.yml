@@ -11,7 +11,7 @@ before_build:
 
 test_script:
 - cmd: echo About to run
-- cmd: dotnet run
+- cmd: dotnet run --project AcademicMarketplace/Application.AcademicMarketplace.csproj
 - cmd: echo Run finished
 
 test:
