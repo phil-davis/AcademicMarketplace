@@ -14,7 +14,7 @@ build_script:
 
 test_script:
   - cmd: echo About to start it
-  - ps: $MyProcess = Start-Process dotnetz -ArgumentList C:\projects\academicmarketplace\AcademicMarketplace\bin\AcademicMarketplace.dll -PassThru
+  - ps: $MyProcess = Start-Process dotnet -ArgumentList C:\projects\academicmarketplace\AcademicMarketplace\bin\AcademicMarketplace1.dll -PassThru
   - cmd: echo Start is done
   - ps: Start-Sleep -s 10
   - cmd: echo Sleep is done
