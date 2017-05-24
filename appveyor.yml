@@ -15,7 +15,7 @@ build_script:
 
 test_script:
   - cmd: echo About to run it
-  - cmd: dotnet AcademicMarketplace\bin\AcademicMarketplace.dll
+  - cmd: AcademicMarketplace\bin\AcademicMarketplace.dll
   - cmd: echo Run has finished
 
 test:
