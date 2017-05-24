@@ -7,7 +7,7 @@ branches:
 
 before_build:
   - nuget restore AcademicMarketplace.sln
-  - npm install --save-dev jasmine-node
+  - npm install --save-dev jasmine-node -g
   - npm install --save-dev frisby
 
 build_script:
