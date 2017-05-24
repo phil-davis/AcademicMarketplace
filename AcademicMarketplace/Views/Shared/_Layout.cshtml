@@ -27,17 +27,17 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="navbar-btn"><a href="~/#!/home">Home</a></li>
-                    <li class="navbar-btn"><a href="~/#!/marketplace">Marketplace</a></li>
                     <li class="navbar-btn"><a href="~/#!/workgroups">Workgroups</a></li>
-                    <li class="navbar-btn"><a href="~/#!/about">(Project Notes)</a></li>
+                    <li class="navbar-btn"><a href="~/#!/marketplace">Marketplace</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
 <div class="container body-content">
+    <hr/>
     @RenderBody()
-    <hr />
+    <hr/>
 </div>
     
     @Scripts.Render("~/bundles/bootstrap")

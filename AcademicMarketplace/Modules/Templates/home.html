@@ -1,8 +1,10 @@
 ﻿<div ui-view>
-    <h1><b>{{am.user.username}}</b> Homepage</h1>
     <div class="row">
-        <div class="panel col-md-12">
-            <div class="panel-body">
+        <div class="panel borderless col-md-12">
+            <div class="panel-heading borderless">
+                <h1 class="h1">{{am.user.username}} Homepage </h1>
+            </div>
+            <div class="panel-body borderless">
                 <div class="col-sm-4">
                     <label>Credit Balance: {{am.user.balance.balance}}</label>
                 </div>
@@ -15,22 +17,22 @@
             </div>
         </div>
 
-        <div class="panel col-md-12">
-            <div class="panel-body">
-                <div class="h3">My Workgroups:</div>
+        <div class="panel borderless col-md-6">
+            <div class="panel-heading borderless h3">My Workgroups:</div>
+            <div class="panel-body borderless">
                 <div class="">
                     <table class="table table-condensed">
                         <tr>
-                            <th>Post Title</th>
-                            <th>Description</th>
-                            <th>Posted Date</th>
-                            <th></th>
+                            <th class="col-sm-4">Code</th>
+                            <th class="col-sm-4">Name</th>
+                            <!--<th>Description</th>-->
+                            <th class="col-sm-4"></th>
                         </tr>
                         <tr class="col-md-12" ng-repeat="item in am.user.workgroups">
-                            <td class="col-sm-2" ng-bind="item.code"></td>
+                            <td class="col-sm-4" ng-bind="item.code"></td>
                             <td class="col-sm-4" ng-bind="item.name"></td>
-                            <td class="col-sm-2" ng-bind="item.description"></td>
-                            <td class="col-sm-2">
+                            <!--<td class="col-sm-2" ng-bind="item.description"></td>-->
+                            <td class="col-sm-4">
                                 <div class="btn btn-default">See More</div>
                             </td>
                         </tr>
@@ -39,24 +41,20 @@
             </div>
         </div>
 
-        <div class="panel col-md-12">
-            <div class="panel-body">
-                <div class="h3">My listings:</div>
+        <div class="panel borderless col-md-6">
+            <div class="panel-heading borderless h3">My Service Requests:</div>
+            <div class="panel-body borderless">
                 <div class="">
                     <table class="table table-condensed">
                         <tr>
-                            <th>Post Title</th>
-                            <th>Description</th>
-                            <th>Posted Date</th>
-                            <th>Active</th>
+                            <th>Listing</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                         <tr class="col-md-12" ng-repeat="item in am.user.postsMade">
-                            <td class="col-sm-2" ng-bind="item.title"></td>
+                            <td class="col-sm-4" ng-bind="item.title"></td>
                             <td class="col-sm-4" ng-bind="item.description"></td>
-                            <td class="col-sm-2" ng-bind="item.postedDate"></td>
-                            <td class="col-sm-2" ng-bind="item.active"></td>
-                            <td class="col-sm-2">
+                            <td class="col-sm-4">
                                 <div class="btn btn-default">See More</div>
                             </td>
                         </tr>
@@ -64,7 +62,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
-    
+
 </div>

@@ -33,7 +33,6 @@ namespace AcademicMarketplace
                 "~/Modules/Services/marketplaceListingService.js",
                 "~/Modules/Services/workgroupService.js",
                 "~/Modules/Controllers/homeController.js",
-                "~/Modules/Controllers/aboutController.js",
                 "~/Modules/Controllers/marketplaceController.js",
                 "~/Modules/Controllers/workgroupController.js",
                 "~/Modules/mainApp.js"

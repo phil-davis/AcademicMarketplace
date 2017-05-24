@@ -2,9 +2,12 @@
     export class MarketplaceController{
         static $inject = ["$scope", "userService", "marketplaceListingService"];
         private user: Models.UserModel.IUserModel;
+        private viewingListingInfo = false;
 
-        newListing: Models.WorkgroupModel.IWorkgroupModel;
-        allListings: Models.MarketplaceListingModel.IMarketplaceListingModel[];
+        private newListing: Models.WorkgroupModel.IWorkgroupModel;
+        private currentListing: Models.MarketplaceListingModel.IMarketplaceListingModel;
+        private allListings: Models.MarketplaceListingModel.IMarketplaceListingModel[];
+        
         mockData: any;
 
         constructor(
@@ -37,13 +40,9 @@
             }
         }
 
-        public userInWorkgroup(listing: Models.MarketplaceListingModel.IMarketplaceListingModel) {
-            if (this.user) {
-                if (this.user.workgroups.some(x => x.marketplaceListings.some(x => x.name == listing.name))) {
-                    return true;
-                }
-            }
-            return false;
+        public showListing(listing: Models.MarketplaceListingModel.IMarketplaceListingModel) {
+            this.currentListing = listing;
+            this.viewingListingInfo = true;
         }
 
         public deleteListing(id: number) {
@@ -56,6 +55,15 @@
             this.userService.getCurrentUser().then((response) => {
                 this.user = response.data;
             });
+        }
+
+        public userInWorkgroup(listing: Models.MarketplaceListingModel.IMarketplaceListingModel) {
+            if (this.user) {
+                if (this.user.workgroups.some(x => x.marketplaceListings.some(x => x.name == listing.name))) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

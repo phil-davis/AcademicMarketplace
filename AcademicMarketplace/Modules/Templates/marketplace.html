@@ -1,16 +1,17 @@
 ﻿<div ui-view>
-    <h1>Marketplace</h1>
-
-    <div class="panel">
-        <div class="panel-body">
+    <div class="panel borderless" ng-if="!am.viewingListingInfo">
+        <div class="panel-heading borderless">
+            <h1 class="h1">Marketplace Listings:</h1>
+        </div>
+        <div class="panel-body borderless">
             <div class="row">
                 <!--<div class="col-sm-2" style="padding: 10px; float: right;">
                     <button class="btn btn-default">Add Listing</button>
                 </div>-->
                 <div class="input-group col-sm-10" style="padding: 10px;">
-                    <label style="padding-right: 5px;">Search</label><input type="text" class="input-sm form-control" ng-model="listingSearchTerm" />
+                    <label style="padding-right: 5px;">Search</label><input type="text" class="input-sm form-control" ng-model="listingSearchTerm"/>
                 </div>
-                
+
             </div>
             <div class="row">
                 <table class="table table-condensed">
@@ -24,10 +25,11 @@
                         <td class="col-sm-2"><input type="text" class="input-sm form-control" ng-model="am.newListing.name" required/></td>
                         <td class="col-sm-2"><select class="input-sm form-control" ng-model="am.newListing.workgroup" ng-options="group.code as group.code for group in am.user.workgroups" required></select></td>
                         <td class="col-sm-6"><input type="text" class="input-sm form-control" ng-model="am.newListing.description"/></td>
-                        <td class="col-sm-2"><div class="btn btn-default" ng-click="am.addListing(am.newListing)">Add Post</div></td>
+                        <td class="col-sm-2">
+                            <div class="btn btn-default" ng-click="am.addListing(am.newListing)">Add Post</div></td>
                     </tr>
                     <tr class="col-md-12" ng-repeat="item in am.allListings | filter: listingSearchTerm">
-                        <td class="col-sm-2" ng-bind="item.name"></td>
+                        <td class="col-sm-2 btn-link" ng-bind="item.name" ng-click="am.showListing(item)"></td>
                         <td class="col-sm-2" ng-bind="item.workgroup"></td>
                         <td class="col-sm-6" ng-bind="item.description"></td>
                         <td class="col-sm-2">
@@ -35,6 +37,29 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel borderless" ng-if="am.viewingListingInfo">
+        <div class="panel-heading borderless">
+            <div class="row">
+                <h1 class="h2">{{am.currentListing.name}}</h1>
+            </div>
+        </div>
+        <div class="panel-body borderless">
+            <div>
+                <div class="h4">Posted by:</div>
+                <p class="body-content">{{am.currentListing.workgroup}}</p>
+            </div>
+            <hr class="borderless"/>
+            <div>
+                <div class="h4">Description:</div>
+                <p class="body-content" ng-bind="am.currentListing.description"></p>
+            </div>
+            <hr class="borderless" />
+            <div>
+                <div class="btn btn-default" ng-click="am.viewingListingInfo = false">Show All</div>
             </div>
         </div>
     </div>

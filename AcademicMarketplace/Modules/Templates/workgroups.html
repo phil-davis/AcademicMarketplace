@@ -1,14 +1,15 @@
 ﻿<div ui-view>
-    <h1>Workgroups</h1>
-
-    <div class="panel">
-        <div class="panel-body">
+    <div class="panel borderless">
+        <div class="panel-heading borderless">
+            <h1 class="h1">Workgroups</h1>
+        </div>
+        <div class="panel-body borderless">
             <div class="row">
                 <!--<div class="col-sm-2" style="padding: 10px; float: right;">
                     <button class="btn btn-default">Add Listing</button>
                 </div>-->
                 <div class="input-group col-sm-10" style="padding: 10px;">
-                    <label style="padding-right: 5px;">Find:</label><input type="text" class="input-sm form-control" ng-model="workgroupSearchTerm" />
+                    <label style="padding-right: 5px;">Find:</label><input type="text" class="input-sm form-control" ng-model="workgroupSearchTerm"/>
                 </div>
 
             </div>
@@ -23,9 +24,9 @@
                         <th></th>
                     </tr>
                     <tr class="col-md-12">
-                        <td class="col-sm-2"><input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.code" /></td>
-                        <td class="col-sm-2"><input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.name" /></td>
-                        <td class="col-sm-4"><input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.description" /></td>
+                        <td class="col-sm-2"><input type="text" class="input-sm form-control" maxlength="10" ng-model="am.newWorkgroup.code"/></td>
+                        <td class="col-sm-2"><input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.name"/></td>
+                        <td class="col-sm-4"><input type="text" class="input-sm form-control" ng-model="am.newWorkgroup.description"/></td>
                         <td class="col-sm-1"></td>
                         <td class="col-sm-1"></td>
                         <td class="col-sm-2">

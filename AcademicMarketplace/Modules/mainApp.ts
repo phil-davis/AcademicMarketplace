@@ -15,7 +15,6 @@ module Core
             this.ngApp.service("workgroupService", AcademicMarketplace.Services.WorkgroupService);
 
             this.ngApp.controller("homeController", AcademicMarketplace.Controllers.HomeController);
-            this.ngApp.controller("aboutController", AcademicMarketplace.Controllers.AboutController);
             this.ngApp.controller("marketplaceController", AcademicMarketplace.Controllers.MarketplaceController);
             this.ngApp.controller("workgroupController", AcademicMarketplace.Controllers.WorkgroupController);
 
@@ -39,17 +38,6 @@ module Core
                                 templateUrl: "Modules/Templates/home.html"
                             }
                         }
-                        });
-
-                    $stateProvider.state("about",
-                        {
-                            url: "/about",
-                            views: {
-                                "": {
-                                    controller: "aboutController",
-                                    templateUrl: "Modules/Templates/about.html"
-                                }
-                            }
                         });
 
                     $stateProvider.state("marketplace",
