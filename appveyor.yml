@@ -13,9 +13,9 @@ build_script:
   - msbuild "C:\projects\academicmarketplace\AcademicMarketplace.sln" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 test_script:
-  - cmd: echo About to run it
-  - cmd: AcademicMarketplace\bin\AcademicMarketplace.dll
-  - cmd: echo Run has finished
+  - cmd: echo About to start it
+  - ps: ps: Start-Process AcademicMarketplace\bin\AcademicMarketplace.dll
+  - cmd: echo Start is done
 
 test:
   assemblies:
