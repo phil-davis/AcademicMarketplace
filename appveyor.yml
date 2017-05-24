@@ -14,7 +14,7 @@ build_script:
 
 test_script:
   - cmd: echo About to start it
-  - cmd: START "" AcademicMarketplace\bin\AcademicMarketplace.dll
+  - cmd: test.cmd
   - cmd: echo Start is done
 
 test:
