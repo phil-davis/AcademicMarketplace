@@ -16,22 +16,5 @@ frisby.create('Academic Marketplace basic site response test')
 frisby.create('Workgroup GetAll test')
 	.get('http://academicmarketplace.azurewebsites.net/Workgroup/GetAll/')
 	.expectHeaderContains('content-type', 'text/xml')
-	.after(function (err, res, body) {
-		var parser = new xml2js.Parser();
-		parser.parseString(body, function (err, result) {
-			expect(result).toContainJson({
-				"server-auth": {
-					"$": {
-						"enabled":"true"
-					},
-					"ldapAuth":["false"],
-					"emailAuth":["true"]
-				}
-			});
-			expect(result).toContainJsonTypes({
-				ArrayOfWorkgroupModel: Array
-			});
-		});
-	})  
 .toss();
 	
