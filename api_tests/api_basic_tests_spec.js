@@ -19,4 +19,5 @@ frisby.create('Workgroup GetAll test')
 	.expectJSONTypes({
 		ArrayOfWorkgroupModel: Array
 	})
+	.inspectBody()
 .toss();
