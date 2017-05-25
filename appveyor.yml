@@ -1,0 +1,29 @@
+version: 1.0.{build}
+
+branches:
+  # whitelist
+  only:
+    - master
+    - develop
+
+before_build:
+  - nuget restore AcademicMarketplace.sln
+  - npm install --save-dev jasmine-node -g
+  - npm install --save-dev frisby
+  - npm install --save-dev xml2js
+
+test_script:
+  - cmd: echo Starting background process for AcademicMarketplace app
+  - ps: $MyProcess = Start-Process runapp.cmd -PassThru
+  - cmd: echo Sleeping a bit to let it come up
+  - ps: Start-Sleep -s 10
+  - cmd: netstat -a
+  - cmd: echo Running API tests
+  - cmd: jasmine-node api_tests/
+  - cmd: echo Stopping background AcademicMarketplace app
+  - ps: Stop-Process -Id $MyProcess.Id
+  - cmd: echo Finished
+
+test:
+  assemblies:
+    - '**\*.UnitTesting.dll'
