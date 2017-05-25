@@ -30,6 +30,7 @@ frisby.create('Workgroup GetAll test')
 frisby.create('Workgroup GetAll test')
 	.post('http://academicmarketplace.azurewebsites.net/Workgroup/GetUserWorkgroups',
 		{ username: 'test' })
+	.auth('test', 'Tester!2', false)
 	.expectStatus(200)
 	.expectHeaderContains('content-type', 'application/json')
 	.inspectJSON()
