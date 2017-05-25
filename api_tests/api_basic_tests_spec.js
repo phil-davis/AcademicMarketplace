@@ -11,7 +11,7 @@ frisby.create('Academic Marketplace basic site response test')
 	.get('http://academicmarketplace.azurewebsites.net/Home/Index')
 	.expectStatus(200)
 	.expectHeaderContains('content-type', 'text/html')
-.toss();
+	.toss();
 
 frisby.create('Workgroup GetAll test')
 	.get('http://academicmarketplace.azurewebsites.net/Workgroup/GetAll')
@@ -25,13 +25,32 @@ frisby.create('Workgroup GetAll test')
 		users : Array
 	})
 	.inspectJSON()
-.toss();
+	.toss();
 
-frisby.create('Workgroup GetAll test')
+frisby.create('POST Login as test')
+	.post('http://academicmarketplace.azurewebsites.net', { username: 'test', password: 'Tester!2', eventId: 11})
+	.after(function(body, res) {
+
+	// Grab returned session cookie
+	var cookie = res.headers['set-cookie'][0].split(';')[0];
+
+	frisby.create('Workgroup GetAll test')
+		// Pass session cookie with each request
+		.addHeader('Cookie', cookie)
+		.post('http://academicmarketplace.azurewebsites.net/Workgroup/GetUserWorkgroups',
+			{ username: 'test' })
+		.expectStatus(302)
+		.expectHeaderContains('content-type', 'application/json')
+		.inspectJSON()
+		.toss();
+	})
+	.toss();
+
+frisby.create('Workgroup GetAll test zzz')
 	.post('http://academicmarketplace.azurewebsites.net/Workgroup/GetUserWorkgroups',
 		{ username: 'test' })
 	.auth('test', 'Tester!2', false)
 	.expectStatus(302)
 	.expectHeaderContains('content-type', 'application/json')
 	.inspectJSON()
-.toss();
+	.toss();
