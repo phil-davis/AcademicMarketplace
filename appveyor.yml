@@ -10,7 +10,6 @@ before_build:
   - nuget restore AcademicMarketplace.sln
   - npm install --save-dev jasmine-node -g
   - npm install --save-dev frisby
-  - npm install --save-dev xml2js
 
 test_script:
   - cmd: echo Starting background process for AcademicMarketplace app
