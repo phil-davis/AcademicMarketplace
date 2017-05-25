@@ -14,14 +14,16 @@ build_script:
   - msbuild "C:\projects\academicmarketplace\AcademicMarketplace.sln" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 test_script:
-  - cmd: echo About to start it
+  - cmd: netstat -a
+  - cmd: echo Starting background process for AcademicMarketplace app
   - ps: $MyProcess = Start-Process runit.cmd -PassThru
-  - cmd: echo Start is done
+  - cmd: echo Sleeping a bit to let it come up
   - ps: Start-Sleep -s 10
-  - cmd: echo Sleep is done
+  - cmd: echo Running API tests
   - cmd: jasmine-node api_tests/
+  - cmd: Stopping background AcademicMarketplace app
   - ps: Stop-Process -Id $MyProcess.Id
-  - cmd: echo Stop is done
+  - cmd: echo Finished
 
 test:
   assemblies:
