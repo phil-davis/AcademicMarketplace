@@ -26,3 +26,11 @@ frisby.create('Workgroup GetAll test')
 	})
 	.inspectJSON()
 .toss();
+
+frisby.create('Workgroup GetAll test')
+	.post('http://academicmarketplace.azurewebsites.net/Workgroup/GetUserWorkgroups',
+		{ username: 'test' })
+	.expectStatus(200)
+	.expectHeaderContains('content-type', 'application/json')
+	.inspectJSON()
+.toss();
