@@ -4,6 +4,7 @@ branches:
   # whitelist
   only:
     - master
+    - develop
 
 before_build:
   - nuget restore AcademicMarketplace.sln
@@ -12,7 +13,7 @@ before_build:
 
 test_script:
   - cmd: echo Starting background process for AcademicMarketplace app
-  - ps: $MyProcess = Start-Process runit.cmd -PassThru
+  - ps: $MyProcess = Start-Process runapp.cmd -PassThru
   - cmd: echo Sleeping a bit to let it come up
   - ps: Start-Sleep -s 10
   - cmd: netstat -a
