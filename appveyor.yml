@@ -21,7 +21,7 @@ test_script:
   - cmd: netstat -a
   - cmd: echo Running API tests
   - cmd: jasmine-node api_tests/
-  - cmd: Stopping background AcademicMarketplace app
+  - cmd: echo Stopping background AcademicMarketplace app
   - ps: Stop-Process -Id $MyProcess.Id
   - cmd: echo Finished
 
