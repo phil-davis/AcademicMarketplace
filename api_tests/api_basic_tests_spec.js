@@ -15,6 +15,7 @@ frisby.create('Academic Marketplace basic site response test')
 
 frisby.create('Workgroup GetAll test')
 	.get('http://academicmarketplace.azurewebsites.net/Workgroup/GetAll')
+	.expectStatus(200)
 	.expectHeaderContains('content-type', 'application/json')
 	.expectJSONTypes('*', {
 		code : String,
