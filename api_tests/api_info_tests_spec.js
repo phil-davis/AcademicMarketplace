@@ -4,7 +4,7 @@ var frisby = require('frisby');
 // and returns reasonable data.
 
 frisby.create('Academic Marketplace basic site response test')
-  .get('http://localhost:5000/Home/Index')
+  .get('http://http://academicmarketplace.azurewebsites.net/Home/Index')
   .expectStatus(200)
   .expectHeaderContains('content-type', 'application/json')
   .expectJSON({
