@@ -20,7 +20,8 @@ frisby.create('Workgroup GetAll test')
 		code : String,
 		name : String,
 		description : String,
-		marketplaceListings : Array
+		marketplaceListings : Array,
+		users : Array
 	})
 	.inspectJSON()
 .toss();
