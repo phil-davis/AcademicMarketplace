@@ -28,7 +28,7 @@ frisby.create('Workgroup GetAll test')
 					"emailAuth":["true"]
 				}
 			});
-			expect(result).expectJSONTypes({
+			expect(result).toContainJsonTypes({
 				ArrayOfWorkgroupModel: Array
 			});
 		});
