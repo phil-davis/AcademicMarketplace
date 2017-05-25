@@ -16,5 +16,11 @@ frisby.create('Academic Marketplace basic site response test')
 frisby.create('Workgroup GetAll test')
 	.get('http://academicmarketplace.azurewebsites.net/Workgroup/GetAll')
 	.expectHeaderContains('content-type', 'application/json')
+	.expectJSONTypes('.?', {
+		code : String,
+		name : String,
+		description : String,
+		marketplaceListings : Array
+	})
 	.inspectJSON()
 .toss();
