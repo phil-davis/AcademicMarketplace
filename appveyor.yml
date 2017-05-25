@@ -10,9 +10,6 @@ before_build:
   - npm install --save-dev jasmine-node -g
   - npm install --save-dev frisby
 
-build_script:
-  - msbuild "C:\projects\academicmarketplace\AcademicMarketplace.sln" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-
 test_script:
   - cmd: echo Starting background process for AcademicMarketplace app
   - ps: $MyProcess = Start-Process runit.cmd -PassThru
